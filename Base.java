@@ -59,34 +59,24 @@ public class Base {
 		// Just laying a groundwork to show how the actual game-loop will work.
 		while (itsHappening = true){
 			System.out.println(playerRoom.roomName); // playerRoom references whatever room the player is currently in, I guess??
-			if (playerRoom.visited == false){
+			if (playerRoom.visited == false){//remember make sure that visited is reset after you re-enter a room
 				System.out.println(playerRoom.roomDesc);
 			}
-			else(){
+			else{
 				System.out.println(playerRoom.roomShortDesc);
 			}
 			System.out.print(">_ ");
 			String input = sc.nextLine();
+			// do an action here
+			
 		}
 	}
 	public static void resetRoomArrayLists(){
-		/*
-		int sizeExits = exits.size();
-		int sizeItems = items.size();
-		
-		for (int count = 0; count < sizeExits; count++){
-			exits.remove(count);
-		}
-		for (int count = 0; count < sizeItems; count++){
-			items.remove(count);
-		}
-		ya dingus
-		pls no bully me ;~;
-		*/
-		exits = new ArrayList();
-		items = new ArrayList();
+		exits = new ArrayList<Exit>();
+		items = new ArrayList<Item>();
 	}
 	public static void main (String str[]) {
 		runGame();
 	}
 }
+
