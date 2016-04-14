@@ -6,6 +6,7 @@ public class Room {
 	String roomShortDesc; // The abridged description of the room, given upon entering the room for the second time and onwards.
 	ArrayList exits; // Directions and objects leading out of the room. (N, E, W, S, Up, Down, Secret Door, etc)
 	ArrayList items; // Items placed in the room.
+	boolean visited = false; // Has the player been inside of the room before?
 	
 	Room(String inputName, String inputDesc, String inputShortDesc, ArrayList inputExits, ArrayList inputItems){
 		roomName = inputName;
@@ -29,5 +30,8 @@ public class Room {
 	}
 	public ArrayList items(){
 		return items;
+	}
+	public boolean visited(){
+		return false;
 	}
 }
