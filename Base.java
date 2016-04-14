@@ -1,7 +1,8 @@
 import java.util.ArrayList;
-
+import java.util.Scanner;
 public class Base {
 	
+	public static boolean itsHappening = true;
 	public static ArrayList exits = new ArrayList();
 	public static ArrayList items = new ArrayList();
 	
@@ -31,7 +32,7 @@ public class Base {
 		Room pastaParlor = new Room("Pasta Parlor","A quaint little Italian resturaunt. The tables are covered with red-and-white checkered tableclothes and stacked high with bowls of spaghetti, but no other patrons are visible.","An empty Italian resturaunt.",items,exits);
 		// End constructing all game objects
 
-		// DEBUGGING I GUESS???
+		// debugging object construction
 		System.out.println("DEBUG");
 		System.out.println();
 		System.out.println(meme.itemName());
@@ -51,6 +52,22 @@ public class Base {
 		System.out.println(dankDungeon.roomName());
 		System.out.println(dankDungeon.roomDesc());
 		System.out.println(dankDungeon.roomShortDesc());
+		System.out.println();
+		// end debugging
+		
+		Scanner sc = new Scanner(System.in);
+		// Just laying a groundwork to show how the actual game-loop will work.
+		while (itsHappening = true){
+			System.out.println(playerRoom.roomName); // playerRoom references whatever room the player is currently in, I guess??
+			if (playerRoom.visited == false){
+				System.out.println(playerRoom.roomDesc);
+			}
+			else(){
+				System.out.println(playerRoom.roomShortDesc);
+			}
+			System.out.print(">_ ");
+			String input = sc.nextLine();
+		}
 	}
 	public static void resetRoomArrayLists(){
 		/*
@@ -64,6 +81,7 @@ public class Base {
 			items.remove(count);
 		}
 		ya dingus
+		pls no bully me ;~;
 		*/
 		exits = new ArrayList();
 		items = new ArrayList();
