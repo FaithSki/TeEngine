@@ -32,6 +32,6 @@ public class Room {
 		return items;
 	}
 	public boolean visited(){
-		return false;
+		return visited;
 	}
 }
