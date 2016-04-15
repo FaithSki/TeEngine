@@ -8,6 +8,7 @@ public class Item {
 	boolean useAble; // Can the item be interacted with? (Use, Combine, Open, etc)
 	boolean dropAble; // Can the item be dropped into a room?
 	Room location;
+	public Verb[] possibleActions;
 	
 	
 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble){
