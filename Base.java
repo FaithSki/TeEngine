@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Base {
-	
+	/*
+	 *I feel that if we're going to have a game engine then we should have the engine, that interacts with another class containing the actual content of our game(items, rooms, verbs) 
+	 */
 	public static boolean itsHappening = true;
 	public static ArrayList exits = new ArrayList<Exit>();
 	public static ArrayList items = new ArrayList<Item>();
@@ -39,10 +41,10 @@ public class Base {
 		playerRoom = pastaParlor;
 		while (itsHappening = true){
 			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
+			// use the short description after every turn, "look" for long description
 			System.out.println(playerRoom.roomName()); 
 			// playerRoom references whatever room the player is currently in, I guess??
-			if (playerRoom.visited() == false){ 
-				//remember make sure that visited is reset after you re-enter a room
+			if (playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
 				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
 				// choose whether you get shortdescriptions or the full description everytime (most infocom interactive fictions have something like that).
@@ -58,6 +60,7 @@ public class Base {
 			// at this point, we need to be able to detect a noun & a verb in the input. common verbs will be easy; "take" will just add a pickupable item
 			// to an inventory arraylist; "drop" will add the item to the playerRoom's item arraylist; examine will print the itemdescription. I don't know
 			// how we're going to handle the logic for unique interactions, like "use fork with spaghetti" or "screw in lightbulb."
+			// "use <Item1> with <Item2>" will have to be a special case, and "screw in" can be a Verb associated with a lightbulb
 			checkInput(input);
 			System.out.println();
 		}
@@ -68,13 +71,24 @@ public class Base {
 	}
 	
 	private static String checkInput(String input){
-		if (input.equalsIgnoreCase("look")){
+		/*
+		if (input.equalsIgnoreCase("look"))
 			return playerRoom.roomDesc();
-		}
+		else
+			return "That is not a recognized command";
+			*/
 		// need to figure out splitting the input into a verb and a noun, I guess?? 
 		// examine <noun> prints itemdescription 
 		// take/grab/pickup <noun> checks if item is pickupable and adds to inventory arraylist
 		// drop <noun> checks if item is droppable and adds to playerRoom's item arraylist
+		
+		// this is going to be some really rough code for implementing Verbs into this method, should give you a basic idea
+		for(Verb currentVerb : Verb.allVerbs){
+			if(input.equalsIgnoreCase(currentVerb.name))
+				// then do sometthiiiiiiiing
+		}
+		
+		
 	}
 	
 	public static void main (String str[]) {
