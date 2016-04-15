@@ -3,8 +3,10 @@ import java.util.Scanner;
 public class Base {
 	
 	public static boolean itsHappening = true;
-	public static ArrayList exits = new ArrayList();
-	public static ArrayList items = new ArrayList();
+	public static ArrayList exits = new ArrayList<Exit>();
+	public static ArrayList items = new ArrayList<Item>();
+	
+	public static Room playerRoom = new Room("","","",items,exits);
 	
 	public static void runGame(){
 		// Start constructing all game objects 
@@ -27,56 +29,55 @@ public class Base {
 		 * Items (ArrayList)
 		 */
 		items.add(meme);
-		Room dankDungeon = new Room("Dungeon","A dark, dank expanse of cobbled stone, forming the room around you.","A dark cobblestone room.",items,exits);
+		Room dankDungeon = new Room("DUNGEON","A dark, dank expanse of cobbled stone, forming the room around you.","A dark cobblestone room.",items,exits);
 		resetRoomArrayLists();
-		Room pastaParlor = new Room("Pasta Parlor","A quaint little Italian resturaunt. The tables are covered with red-and-white checkered tableclothes and stacked high with bowls of spaghetti, but no other patrons are visible.","An empty Italian resturaunt.",items,exits);
+		Room pastaParlor = new Room("PASTA PARLOR","A quaint little Italian resturaunt. The tables are covered with red-and-white checkered tableclothes and stacked high with bowls of spaghetti, but no other patrons are visible.","An empty Italian resturaunt.",items,exits);
 		// End constructing all game objects
 
-		// debugging object construction
-		System.out.println("DEBUG");
-		System.out.println();
-		System.out.println(meme.itemName());
-		// Probs either going to need a method that changes the punctuation/capitalization of the names so it fits in a variety of outputs 
-		// like "This is a meme." and "Meme is hungry." Or we can just be lazy and do it like "This is a MEME." and "MEME is hungry."
-		// ^^^^^^^^^ Will we ever need that for items? "The meme is hungry." "A meme Is lying on the ground."
-		System.out.println(meme.itemDescription());
-		System.out.println();
-		System.out.println(spaghetti.itemName());
-		System.out.println(spaghetti.itemDescription());
-		System.out.println();
-		System.out.println(pastaParlor.roomName());
-		System.out.println(pastaParlor.roomDesc()); 
-		// We'll need a method to automatically split the text into a new line if it exceeds the size of the console (on a 1600x900 screen)
-		System.out.println(pastaParlor.roomShortDesc());
-		System.out.println();
-		System.out.println(dankDungeon.roomName());
-		System.out.println(dankDungeon.roomDesc());
-		System.out.println(dankDungeon.roomShortDesc());
-		System.out.println();
-		// end debugging
-		
 		Scanner sc = new Scanner(System.in);
 		// Just laying a groundwork to show how the actual game-loop will work.
+		playerRoom = pastaParlor;
 		while (itsHappening = true){
-			System.out.println(playerRoom.roomName); // playerRoom references whatever room the player is currently in, I guess??
-			if (playerRoom.visited == false){//remember make sure that visited is reset after you re-enter a room
-				System.out.println(playerRoom.roomDesc);
+			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
+			System.out.println(playerRoom.roomName()); 
+			// playerRoom references whatever room the player is currently in, I guess??
+			if (playerRoom.visited() == false){ 
+				//remember make sure that visited is reset after you re-enter a room
+				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
+				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
+				// choose whether you get shortdescriptions or the full description everytime (most infocom interactive fictions have something like that).
+				System.out.println(playerRoom.roomDesc());
 			}
 			else{
-				System.out.println(playerRoom.roomShortDesc);
+				System.out.println(playerRoom.roomShortDesc());
 			}
 			System.out.print(">_ ");
 			String input = sc.nextLine();
-			// do an action here
-			
+			playerRoom.visited = true;
+			System.out.println();
+			// at this point, we need to be able to detect a noun & a verb in the input. common verbs will be easy; "take" will just add a pickupable item
+			// to an inventory arraylist; "drop" will add the item to the playerRoom's item arraylist; examine will print the itemdescription. I don't know
+			// how we're going to handle the logic for unique interactions, like "use fork with spaghetti" or "screw in lightbulb."
+			checkInput(input);
+			System.out.println();
 		}
 	}
 	public static void resetRoomArrayLists(){
 		exits = new ArrayList<Exit>();
 		items = new ArrayList<Item>();
 	}
+	
+	private static String checkInput(String input){
+		if (input.equalsIgnoreCase("look")){
+			return playerRoom.roomDesc();
+		}
+		// need to figure out splitting the input into a verb and a noun, I guess?? 
+		// examine <noun> prints itemdescription 
+		// take/grab/pickup <noun> checks if item is pickupable and adds to inventory arraylist
+		// drop <noun> checks if item is droppable and adds to playerRoom's item arraylist
+	}
+	
 	public static void main (String str[]) {
 		runGame();
 	}
 }
-
