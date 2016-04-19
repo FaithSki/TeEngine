@@ -84,8 +84,14 @@ public class Base {
 		
 		// this is going to be some really rough code for implementing Verbs into this method, should give you a basic idea
 		for(Verb currentVerb : Verb.allVerbs){
-			if(input.equalsIgnoreCase(currentVerb.name))
+			if(input.equalsIgnoreCase(currentVerb.name)){
 				// then do sometthiiiiiiiing
+				// might need to make Verbs into individual methods in the Verb class, or their own classes; idk how we're going to get basic functionality
+				// out of them by just passing parameters when we construct them.
+				// so, like, maybe if currentVerb is "drop", it calls Verb.drop(nounItem, playerRoom) or something.
+				// ('nounItem' would be whatever noun the verb is being applied to.
+			}
+			
 		}
 		
 		
