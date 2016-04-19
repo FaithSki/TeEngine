@@ -70,7 +70,7 @@ public class Base {
 		items = new ArrayList<Item>();
 	}
 	
-	private static String checkInput(String input){
+	private static void checkInput(String input){
 		/*
 		if (input.equalsIgnoreCase("look"))
 			return playerRoom.roomDesc();
