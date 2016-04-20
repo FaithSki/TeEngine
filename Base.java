@@ -33,6 +33,7 @@ public class Base {
 		items.add(meme);
 		Room dankDungeon = new Room("DUNGEON","A dark, dank expanse of cobbled stone, forming the room around you.","A dark cobblestone room.",items,exits);
 		resetRoomArrayLists();
+		items.add(spaghetti);
 		Room pastaParlor = new Room("PASTA PARLOR","A quaint little Italian resturaunt. The tables are covered with red-and-white checkered tableclothes and stacked high with bowls of spaghetti, but no other patrons are visible.","An empty Italian resturaunt.",items,exits);
 		// End constructing all game objects
 
