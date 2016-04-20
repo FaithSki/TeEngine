@@ -27,4 +27,7 @@ public class Verb {
 	public static void examine(Item examineItem, Room currentRoom){
 		System.out.println(examineItem.itemDescription());
 	}
+	public static void look(Room currentRoom){
+		System.out.println(currentRoom.roomDesc());
+	}
 }
