@@ -72,6 +72,8 @@ public class Base {
 	}
 	
 	private static void checkInput(String input){
+		String foundVerb;
+		String foundNoun; //might need multiple of these (only 2?
 		
 		Item nounItem = new Item("","",false,false,false);
 		
@@ -84,6 +86,7 @@ public class Base {
 		for(Verb currentVerb : Verb.allVerbs){
 			if(input.equalsIgnoreCase(currentVerb.name)){
 				// not sure how we can call a certain verb method from this. give it a shot, i guess??
+				//this was when I was thinking that verbs would be classes, like I say up top, as an engine it might be good for the game to innately accept verbs from any game, with te methods we might have to enter allVerbs manually as Strings, not sure what to do there
 			}
 		}
 		
