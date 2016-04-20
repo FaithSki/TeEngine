@@ -9,6 +9,9 @@ public class Item {
 	boolean dropAble; // Can the item be dropped into a room?
 	Room location;
 	public Verb[] possibleActions;
+	public String cantInteractText;
+	
+	public static Item[] allItems;
 	
 	
 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble){
