@@ -71,27 +71,19 @@ public class Base {
 	}
 	
 	private static void checkInput(String input){
-		/*
-		if (input.equalsIgnoreCase("look"))
-			return playerRoom.roomDesc();
-		else
-			return "That is not a recognized command";
-			*/
-		// need to figure out splitting the input into a verb and a noun, I guess?? 
-		// examine <noun> prints itemdescription 
-		// take/grab/pickup <noun> checks if item is pickupable and adds to inventory arraylist
-		// drop <noun> checks if item is droppable and adds to playerRoom's item arraylist
 		
-		// this is going to be some really rough code for implementing Verbs into this method, should give you a basic idea
+		Item nounItem = new Item("","",false,false,false);
+		
+		for(Item currentItem : Item.allItems){
+			if(input.equalsIgnoreCase(currentItem.itemName)){
+				nounItem = currentItem;
+			}
+		}
+
 		for(Verb currentVerb : Verb.allVerbs){
 			if(input.equalsIgnoreCase(currentVerb.name)){
-				// then do sometthiiiiiiiing
-				// might need to make Verbs into individual methods in the Verb class, or their own classes; idk how we're going to get basic functionality
-				// out of them by just passing parameters when we construct them.
-				// so, like, maybe if currentVerb is "drop", it calls Verb.drop(nounItem, playerRoom) or something.
-				// ('nounItem' would be whatever noun the verb is being applied to.
+				// not sure how we can call a certain verb method from this. give it a shot, i guess??
 			}
-			
 		}
 		
 		
