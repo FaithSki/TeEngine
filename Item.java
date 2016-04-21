@@ -11,6 +11,9 @@
  	public Verb[] possibleActions;
 	//public String cantInteractText;
 	// I'd rather not do it like that, cuz we'd want a different message for being unable to pickup, unable to drop, unable to use, etc
+ 	public String cantPickUpMessage;
+ 	public String cantDropMessage;
+ 	public String cantUseMessage;
 	public static Item[] allItems;
  	
  	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble){
@@ -36,4 +39,4 @@
  	public boolean dropAble(){
  		return dropAble;
  	}
- }
+ 
