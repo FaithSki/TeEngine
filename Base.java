@@ -73,20 +73,21 @@ public class Base {
 	
 	private static void checkInput(String input){
 		String foundVerb;
-		String foundNoun; //might need multiple of these (only 2?
+		String foundNoun; //might need multiple of these (only 2 depending on if players will ever be able to use more items?)
 		
 		Item nounItem = new Item("","",false,false,false);
-		
+		//remember to check the items in the CURRENT ROOM not all items
 		for(Item currentItem : Item.allItems){
 			if(input.equalsIgnoreCase(currentItem.itemName)){
 				nounItem = currentItem;
 			}
 		}
-
+			//	here, do the verbs on the verbs on the current item	
 		for(Verb currentVerb : Verb.allVerbs){
 			if(input.equalsIgnoreCase(currentVerb.name)){
 				// not sure how we can call a certain verb method from this. give it a shot, i guess??
 				//this was when I was thinking that verbs would be classes, like I say up top, as an engine it might be good for the game to innately accept verbs from any game, with te methods we might have to enter allVerbs manually as Strings, not sure what to do there
+				//																																																					loooooooong comments
 			}
 		}
 		
@@ -94,6 +95,8 @@ public class Base {
 	}
 	
 	public static void main (String str[]) {
-		runGame();
+		Scanner input = new Scanner(System.in);
+		//runGame();
+		checkInput(input.nextLine());
 	}
 }
