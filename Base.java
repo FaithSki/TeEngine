@@ -19,9 +19,10 @@ public class Base {
 		 * Pickupable (boolean)
 		 * Usable (boolean)
 		 * Dropable (boolean)
+		 * Visible (boolean)
 		 */
-		Item meme = new Item("Meme","An unusually dank item.",true,false,true);
-		Item spaghetti = new Item("Bowl of spaghetti","A blue plastic bowl, filled to the brim with tasty pasta.",true,true,true);
+		Item meme = new Item("Meme","An unusually dank item.",true,false,true,true);
+		Item spaghetti = new Item("Bowl of spaghetti","A blue plastic bowl, filled to the brim with tasty pasta.",true,true,true,true);
 		
 		/*Room constructor takes, in this order: 
 		 * Name (String)
@@ -75,7 +76,7 @@ public class Base {
 		String foundVerb;
 		String foundNoun; //might need multiple of these (only 2 depending on if players will ever be able to use more items?)
 		
-		Item nounItem = new Item("","",false,false,false);
+		Item nounItem = new Item("","",false,false,false,false);
 		//remember to check the items in the CURRENT ROOM not all items
 		for(Item currentItem : Item.allItems){
 			if(input.equalsIgnoreCase(currentItem.itemName)){
