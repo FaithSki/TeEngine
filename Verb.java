@@ -21,7 +21,7 @@ public class Verb {
 			currentRoom.items.remove(takeItem);
 			System.out.println("You take the " + takeItem.itemName() + ".");
 		}else
-			System.out.println(takeItem.cantInteractText);
+			System.out.println(takeItem.cantPickUpMessage);
 		// once we have our demo done, we should figure out how to have it so items can override these "you can't do" messages.
 		// so, like, idk; "It won't budge" is fine for, like, a boulder, but it'd be nice to add extra flavor for things that have
 		// other reasons as to why you can't/won't take it, drop it, etc.
