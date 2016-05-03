@@ -5,8 +5,8 @@ public class Base {
 	 *I feel that if we're going to have a game engine then we should have the engine, that interacts with another class containing the actual content of our game(items, rooms, verbs) 
 	 */
 	public static boolean itsHappening = true;
-	public static ArrayList exits = new ArrayList<Exit>();
-	public static ArrayList items = new ArrayList<Item>();
+	public static ArrayList<Exit> exits = new ArrayList<Exit>();
+	public static ArrayList<Item> items = new ArrayList<Item>();
 	
 	public static Room playerRoom = new Room("","","",items,exits);
 	
@@ -79,18 +79,16 @@ public class Base {
 	}
 	
 	private static void checkInput(String input){
-		String foundVerb;
-		String foundNoun;
-		
+		/*
 		Item nounItem = new Item("","",false,false,false,false);
 		//remember to check the items in the CURRENT ROOM not all items
-		/*for(Item currentItem : playerRoom.items){
+		for(Item currentItem : playerRoom.items){
 			// KILL ME
 			if(input.equalsIgnoreCase(currentItem.itemName)){
 				nounItem = currentItem;
 			}
 		}
-		*/
+		
 		for(int count = 0; count < playerRoom.items.size(); count++){
 			if(input.equalsIgnoreCase(playerRoom.items(count))){
 				nounItem = playerRoom.items(count);
@@ -98,13 +96,13 @@ public class Base {
 			// this code is killing me, help
 		}
 		
-		/*for(Verb currentVerb : Verb.allVerbs){
+		for(Verb currentVerb : Verb.allVerbs){
 			if(input.equalsIgnoreCase(currentVerb.name)){
 				// aaaahhhhh
 				
 			}
 		}
-		*/
+		
 		if (input.equalsIgnoreCase("examine")){
 			Verb.examine(nounItem);
 		}
@@ -117,13 +115,47 @@ public class Base {
 		if (input.equalsIgnoreCase("drop")){
 			Verb.drop(nounItem,playerRoom);
 		}
+		*/
+		
 		// kill me
 		// this code is so bad
+		
+		/* What needs to go on here
+		 * 1. get input
+		 * 2. get verb from input
+		 * 3. get noun from input
+		 * 4. find Item from noun
+		 * 5. now check through all the possible verbs for that noun
+		 * 6. if it is a possible action, then do it
+		 * We just need a proof of concept for the demo
+		 */
+		String[] generalActions = {"look","take"};//take maybe should be on the item side and not the "general actions" side
+		Item blank = new Item("","",false,false,false,false,generalActions);
+		String[] actions = {"examine","eat"};
+		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions);
+		
+		PlayerInfo.inventory.add(fettuccine);//what do you wanttttt
+		
+		int space = input.indexOf(" ");
+		//input must be in order "verb noun" for now
+		String foundVerb = input.substring(0,space);
+		String foundNoun = input.substring(space);
+		
+		for(Item current : PlayerInfo.inventory<Item>)//I DONT GET IT
+			if(current == inventory)//this would have to be different if we're going to have multiple of the same item, the references wouldnt be the same
+				if(fettuccine.isActionPossible(foundVerb))
+					Verb.findAction(foundVerb);
+				else
+					System.out.print("cannot do this or something");
+			else
+				System.out.print("cannot find this item or something");
+		
+			
 	}
 	
 	public static void main (String str[]) {
 		Scanner input = new Scanner(System.in);
-		runGame();
-		//checkInput(input.nextLine());
+		//runGame();
+		checkInput(input.nextLine());
 	}
 }

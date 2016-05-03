@@ -9,7 +9,7 @@ import java.util.ArrayList;
  	boolean dropAble; // Can the item be dropped into a room?
  	boolean visible; // Can the item be seen when the room is examined?
  	Room location;
- 	public Verb[] possibleActions;
+ 	public String[] possibleActions;
 	//public String cantInteractText;
 	// I'd rather not do it like that, cuz we'd want a different message for being unable to pickup, unable to drop, unable to use, etc
  	public String cantPickUpMessage;
@@ -17,14 +17,23 @@ import java.util.ArrayList;
  	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
 	public static Item[] allItems;
  	
- 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible){
+ 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, String inputPossibleActions[]){
  		itemName = inputName;
  		itemDescription = inputDescription;
  		pickupAble = inputPickupAble;
  		useAble = inputUseAble;
  		dropAble = inputDropAble;
  		visible = inputVisible;
+ 		possibleActions = inputPossibleActions;
  	}
+ 	
+ 	public boolean isActionPossible(String verb){
+ 		for(String action : possibleActions)
+ 			if(action.equalsIgnoreCase(verb))
+ 				return true;
+ 		return false;
+ 	}
+ 	
  	// Following methods all just retrieve variables
  	public String itemName(){
  		return itemName;
