@@ -56,6 +56,7 @@ public class Base {
 				System.out.println(playerRoom.roomShortDesc());
 			}
 			System.out.print(">_ ");
+
 			String input = sc.nextLine();
 			playerRoom.visited = true;
 			System.out.println();
@@ -63,10 +64,15 @@ public class Base {
 			// to an inventory arraylist; "drop" will add the item to the playerRoom's item arraylist; examine will print the itemdescription. I don't know
 			// how we're going to handle the logic for unique interactions, like "use fork with spaghetti" or "screw in lightbulb."
 			// "use <Item1> with <Item2>" will have to be a special case, and "screw in" can be a Verb associated with a lightbulb
-			checkInput(input);
+			try{
+				checkInput(input);
+			}
+			catch (Exception a){
+				System.out.println("That doesn't quite make sense.");
+			}
 			System.out.println();
 		}
-	}
+	}	
 	public static void resetRoomArrayLists(){
 		exits = new ArrayList<Exit>();
 		items = new ArrayList<Item>();
@@ -74,30 +80,50 @@ public class Base {
 	
 	private static void checkInput(String input){
 		String foundVerb;
-		String foundNoun; //might need multiple of these (only 2 depending on if players will ever be able to use more items?)
+		String foundNoun;
 		
 		Item nounItem = new Item("","",false,false,false,false);
 		//remember to check the items in the CURRENT ROOM not all items
-		for(Item currentItem : Item.allItems){
+		/*for(Item currentItem : playerRoom.items){
+			// KILL ME
 			if(input.equalsIgnoreCase(currentItem.itemName)){
 				nounItem = currentItem;
 			}
 		}
-			//	here, do the verbs on the verbs on the current item	
-		for(Verb currentVerb : Verb.allVerbs){
-			if(input.equalsIgnoreCase(currentVerb.name)){
-				// not sure how we can call a certain verb method from this. give it a shot, i guess??
-				//this was when I was thinking that verbs would be classes, like I say up top, as an engine it might be good for the game to innately accept verbs from any game, with te methods we might have to enter allVerbs manually as Strings, not sure what to do there
-				//																																																					loooooooong comments
+		*/
+		for(int count = 0; count < playerRoom.items.size(); count++){
+			if(input.equalsIgnoreCase(playerRoom.items(count))){
+				nounItem = playerRoom.items(count);
 			}
+			// this code is killing me, help
 		}
 		
-		
+		/*for(Verb currentVerb : Verb.allVerbs){
+			if(input.equalsIgnoreCase(currentVerb.name)){
+				// aaaahhhhh
+				
+			}
+		}
+		*/
+		if (input.equalsIgnoreCase("examine")){
+			Verb.examine(nounItem);
+		}
+		if (input.equalsIgnoreCase("look")){
+			Verb.look(playerRoom);
+		}
+		if (input.equalsIgnoreCase("take")){
+			Verb.take(nounItem,playerRoom);
+		}
+		if (input.equalsIgnoreCase("drop")){
+			Verb.drop(nounItem,playerRoom);
+		}
+		// kill me
+		// this code is so bad
 	}
 	
 	public static void main (String str[]) {
 		Scanner input = new Scanner(System.in);
-		//runGame();
-		checkInput(input.nextLine());
+		runGame();
+		//checkInput(input.nextLine());
 	}
 }
