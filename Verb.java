@@ -1,6 +1,6 @@
 public class Verb {
 	public String name;
-	public static Verb allVerbs[];
+	public static String allVerbs[];
 	public Item actsOn;
 	//we really need to change the way that verbs work
 	public static void drop(Item dropItem, Room currentRoom){
@@ -31,9 +31,12 @@ public class Verb {
 	}
 	
 	public void isActionPossible(String verb){
- 		for(String action : allVerbs)
- 			if(action.equalsIgnoreCase(verb))
+ 		for(String action : allVerbs){
+ 			if(action.equalsIgnoreCase(verb)){
+ 				
+ 			}
  				//needs to be finished
+ 		}
 	}
 	
 	public static void examine(Item examineItem){
@@ -47,5 +50,10 @@ public class Verb {
 	public static void eat(Item toEat){
 		System.out.print("You ate the " + toEat.itemName());
 		PlayerInfo.inventory.remove(toEat);
+	}
+
+	public static void findAction(String foundVerb) {
+		
+		
 	}
 }
