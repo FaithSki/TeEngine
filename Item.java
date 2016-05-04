@@ -17,7 +17,7 @@ import java.util.ArrayList;
  	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
 	public static Item[] allItems;
  	
- 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, String inputPossibleActions[]){
+ 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, String inputPossibleActions[], String inputCantPickUp){
  		itemName = inputName;
  		itemDescription = inputDescription;
  		pickupAble = inputPickupAble;
@@ -25,6 +25,7 @@ import java.util.ArrayList;
  		dropAble = inputDropAble;
  		visible = inputVisible;
  		possibleActions = inputPossibleActions;
+ 		cantPickUpMessage = inputCantPickUp;
  	}
  	
  	public boolean isActionPossible(String verb){
