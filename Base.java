@@ -20,9 +20,12 @@ public class Base {
 		 * Usable (boolean)
 		 * Dropable (boolean)
 		 * Visible (boolean)
+		 * Possible Actions (String array)
 		 */
-		Item meme = new Item("Meme","An unusually dank item.",true,false,true,true);
-		Item spaghetti = new Item("Bowl of spaghetti","A blue plastic bowl, filled to the brim with tasty pasta.",true,true,true,true);
+		String[] memeActions = {"examine","post"};
+		Item meme = new Item("Meme","An unusually shiny item.",true,false,true,true,memeActions,"You can't quite get a grip on it.");
+		String[] spaghettiActions = {"examine","eat"};
+		Item spaghetti = new Item("Bowl of spaghetti","A blue plastic bowl, filled to the brim with tasty pasta.",true,true,true,true,spaghettiActions,"It's bolted to the table!");
 		
 		/*Room constructor takes, in this order: 
 		 * Name (String)
@@ -83,7 +86,6 @@ public class Base {
 		Item nounItem = new Item("","",false,false,false,false);
 		//remember to check the items in the CURRENT ROOM not all items
 		for(Item currentItem : playerRoom.items){
-			// KILL ME
 			if(input.equalsIgnoreCase(currentItem.itemName)){
 				nounItem = currentItem;
 			}
@@ -93,7 +95,6 @@ public class Base {
 			if(input.equalsIgnoreCase(playerRoom.items(count))){
 				nounItem = playerRoom.items(count);
 			}
-			// this code is killing me, help
 		}
 		
 		for(Verb currentVerb : Verb.allVerbs){
@@ -117,9 +118,6 @@ public class Base {
 		}
 		*/
 		
-		// kill me
-		// this code is so bad
-		
 		/* What needs to go on here
 		 * 1. get input
 		 * 2. get verb from input
@@ -130,9 +128,9 @@ public class Base {
 		 * We just need a proof of concept for the demo
 		 */
 		String[] generalActions = {"look","take"};//take maybe should be on the item side and not the "general actions" side
-		Item blank = new Item("","",false,false,false,false,generalActions);
+		Item blank = new Item("","",false,false,false,false,generalActions,"");
 		String[] actions = {"examine","eat"};
-		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions);
+		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions,"It's too slippery!");
 		
 		PlayerInfo.inventory.add(fettuccine);//what do you wanttttt
 		
@@ -141,21 +139,24 @@ public class Base {
 		String foundVerb = input.substring(0,space);
 		String foundNoun = input.substring(space);
 		
-		for(Item current : PlayerInfo.inventory<Item>)//I DONT GET IT
-			if(current == inventory)//this would have to be different if we're going to have multiple of the same item, the references wouldnt be the same
-				if(fettuccine.isActionPossible(foundVerb))
+		for(Object current : PlayerInfo.inventory){
+			if(current == PlayerInfo.inventory){
+				if(fettuccine.isActionPossible(foundVerb)){
 					Verb.findAction(foundVerb);
-				else
-					System.out.print("cannot do this or something");
-			else
-				System.out.print("cannot find this item or something");
-		
-			
+				}
+				else{
+					System.out.print("How will you manage that?");
+					}
+			}
+			else{
+				System.out.println("You can't see such a thing.");
+			}
+		}
 	}
 	
 	public static void main (String str[]) {
-		Scanner input = new Scanner(System.in);
-		//runGame();
-		checkInput(input.nextLine());
+		//Scanner input = new Scanner(System.in);
+		runGame();
+		//checkInput(input.nextLine());
 	}
 }
