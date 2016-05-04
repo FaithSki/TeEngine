@@ -10,6 +10,8 @@ public class Base {
 	
 	public static Room playerRoom = new Room("","","",items,exits);
 	
+	//TODO: fix our code, now we should remove any items or rooms except for testing stuffs, make sure our game loop is super tight 
+	
 	public static void runGame(){
 		// Start constructing all game objects 
 		
@@ -21,12 +23,17 @@ public class Base {
 		 * Dropable (boolean)
 		 * Visible (boolean)
 		 * Possible Actions (String array)
+		 * Cantpickupmessage (String) 
 		 */
 		String[] memeActions = {"examine","post"};
 		Item meme = new Item("Meme","An unusually shiny item.",true,false,true,true,memeActions,"You can't quite get a grip on it.");
 		String[] spaghettiActions = {"examine","eat"};
 		Item spaghetti = new Item("Bowl of spaghetti","A blue plastic bowl, filled to the brim with tasty pasta.",true,true,true,true,spaghettiActions,"It's bolted to the table!");
-		
+		String[] actions = {"examine","eat"};
+		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions,"It's too slippery!");
+		String[] generalActions = {"look","take"};//take maybe should be on the item side and not the "general actions" side
+		Item blank = new Item("","",false,false,false,false,generalActions,"");
+		items.add(blank);
 		/*Room constructor takes, in this order: 
 		 * Name (String)
 		 * Description (String)
@@ -127,15 +134,14 @@ public class Base {
 		 * 6. if it is a possible action, then do it
 		 * We just need a proof of concept for the demo
 		 */
-		String[] generalActions = {"look","take"};//take maybe should be on the item side and not the "general actions" side
-		Item blank = new Item("","",false,false,false,false,generalActions,"");
-		String[] actions = {"examine","eat"};
-		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions,"It's too slippery!");
+		
 		
 		PlayerInfo.inventory.add(fettuccine);//what do you wanttttt
 		
 		int space = input.indexOf(" ");
 		//input must be in order "verb noun" for now
+		//we might want to find a more flexible way to get the input, maybe find the verb keyword FIRST and then find the relating nouns
+		//each verb could have a specific format, maybe if it finds "eat" and "with" it will get the "eat with" verb in the "eat 'noun' with 'noun'" format, looking for words before and after with, including spaces
 		String foundVerb = input.substring(0,space);
 		String foundNoun = input.substring(space);
 		
@@ -143,12 +149,10 @@ public class Base {
 			if(current == PlayerInfo.inventory){
 				if(fettuccine.isActionPossible(foundVerb)){
 					Verb.findAction(foundVerb);
-				}
-				else{
+				}else{
 					System.out.print("How will you manage that?");
-					}
-			}
-			else{
+				}
+			}else{
 				System.out.println("You can't see such a thing.");
 			}
 		}
