@@ -145,6 +145,8 @@ public class Base {
 		String foundVerb = input.substring(0,space);
 		String foundNoun = input.substring(space);
 		
+		// if i'm not misunderstanding this; it should check both your inventory and the current room, cuz we want
+		// to be able to "take" stuff, "examine" stuff, and maybe "use" stuff without picking it up.
 		for(Object current : PlayerInfo.inventory){
 			if(current == PlayerInfo.inventory){
 				if(fettuccine.isActionPossible(foundVerb)){
