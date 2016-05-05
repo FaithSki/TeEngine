@@ -54,4 +54,7 @@ import java.util.ArrayList;
  	public boolean visible(){
  		return visible;
  	}
+ 	public String toString(){
+ 		return itemName;
+ 	}
  }
