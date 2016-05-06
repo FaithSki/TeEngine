@@ -34,6 +34,17 @@ public class Base {
 		String[] actions = {"examine","eat"};
 		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions,"It's too slippery!");
 		String[] generalActions = {"look","take"};//take maybe should be on the item side and not the "general actions" side
+		
+		/*Exit constructor takes, in this order:
+		 * Room1's Name (String)
+		 * Room2's Name (String)
+		 * The Exit's names in Room1 (String array)
+		 * The Exit's names in Room2 (String array)
+		 * Locked (boolean)
+		 */
+		String[] testNames1 = {"n","north"};
+		String[] testNames2 = {"s","south"};
+		Exit test = new Exit("DUNGEON","PASTA PARLOR",testNames1,testNames2,true);
 		/*Room constructor takes, in this order: 
 		 * Name (String)
 		 * Description (String)
@@ -75,12 +86,11 @@ public class Base {
 			// how we're going to handle the logic for unique interactions, like "use fork with spaghetti" or "screw in lightbulb."
 			// "use <Item1> with <Item2>" will have to be a special case, and "screw in" can be a Verb associated with a lightbulb
 			System.out.println("DEBUG @ LINE 78");
-			checkInput(input);
+			//checkInput(input);
 			try{
 				checkInput(input);
 			}
 			catch (Exception a){
-				
 				System.out.println("That doesn't quite make sense.");
 			}
 			System.out.println();
@@ -141,12 +151,19 @@ public class Base {
 		
 		//PlayerInfo.inventory.add(fettuccine);//what do you wanttttt
 		
+		String foundVerb = null;
+		String foundNoun = null;
 		int space = input.indexOf(" ");
 		//input must be in order "verb noun" for now
 		//we might want to find a more flexible way to get the input, maybe find the verb keyword FIRST and then find the relating nouns
 		//each verb could have a specific format, maybe if it finds "eat" and "with" it will get the "eat with" verb in the "eat 'noun' with 'noun'" format, looking for words before and after with, including spaces
-		String foundVerb = input.substring(0,space);
-		String foundNoun = input.substring(space);
+		try{
+			foundVerb = input.substring(0,space);
+			foundNoun = input.substring(space);
+		}
+		catch (Exception b){
+			System.out.println("DEBUG: Catching out-of-bounds exception @ line 150");
+		}
 		matchNoun(foundNoun);
 		
 		// if i'm not misunderstanding this; it should check both your inventory and the current room, cuz we want
@@ -166,15 +183,20 @@ public class Base {
 		
 		public static Item matchNoun(String checkNoun){
 			// sorry for going back to my weirdo for loops, but I understand them a lot better than the : ones
-			for (int count = 0; count < items.size(); count++){
-				if ((playerRoom.items.get(count)).toString().equalsIgnoreCase(checkNoun)){
-					return (Item)playerRoom.items.get(count);
+			try{
+				for (int count = 0; count < items.size(); count++){
+					if ((playerRoom.items.get(count)).toString().equalsIgnoreCase(checkNoun)){
+						return (Item)playerRoom.items.get(count);
+					}
+				}
+				for (int count = 0; count < PlayerInfo.inventory.size(); count++){
+					if (((String)PlayerInfo.inventory.get(count)).equalsIgnoreCase(checkNoun)){
+						return (Item)PlayerInfo.inventory.get(count);
+					}
 				}
 			}
-			for (int count = 0; count < PlayerInfo.inventory.size(); count++){
-				if (((String)PlayerInfo.inventory.get(count)).equalsIgnoreCase(checkNoun)){
-					return (Item)PlayerInfo.inventory.get(count);
-				}
+			catch (Exception c){
+				System.out.println("DEBUG: Catching out-of-bounds exception @ line 176");
 			}
 			return blank;
 		}
