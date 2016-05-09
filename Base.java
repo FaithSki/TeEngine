@@ -8,8 +8,6 @@ public class Base {
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	
-	public static Room playerRoom = new Room("","","",items,exits);
-	
 	//TODO: clean this crap up, I have no idea what you did that you still need so if you dont need it then delete it
 	
 	public static void runGame(){
@@ -50,36 +48,36 @@ public class Base {
 
 		Scanner sc = new Scanner(System.in);
 		// Just laying a groundwork to show how the actual game-loop will work.
-		playerRoom = pastaParlor;
+		PlayerInfo.playerRoom = pastaParlor;
 		while (itsHappening = true){
 			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
 			// use the short description after every turn, "look" for long description
-			System.out.println(playerRoom.roomName()); 
+			System.out.println(PlayerInfo.playerRoom.roomName()); 
 			// playerRoom references whatever room the player is currently in, I guess??
-			if (playerRoom.visited() == false){
+			if (PlayerInfo.playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
 				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
 				// choose whether you get shortdescriptions or the full description everytime (most infocom interactive fictions have something like that).
-				System.out.println(playerRoom.roomDesc());
+				System.out.println(PlayerInfo.playerRoom.roomDesc());
 			}
 			else{
-				System.out.println(playerRoom.roomShortDesc());
+				System.out.println(PlayerInfo.playerRoom.roomShortDesc());
 			}
 			System.out.print(">_ ");
 
 			String input = sc.nextLine();
-			playerRoom.visited = true;
+			PlayerInfo.playerRoom.visited = true;
 			System.out.println();
 			// at this point, we need to be able to detect a noun & a verb in the input. common verbs will be easy; "take" will just add a pickupable item
 			// to an inventory arraylist; "drop" will add the item to the playerRoom's item arraylist; examine will print the itemdescription. I don't know
 			// how we're going to handle the logic for unique interactions, like "use fork with spaghetti" or "screw in lightbulb."
 			// "use <Item1> with <Item2>" will have to be a special case, and "screw in" can be a Verb associated with a lightbulb
-			try{
+			//try{
 				checkInput(input);
-			}
-			catch (Exception a){
+			//}
+			//catch (Exception a){
 				System.out.println("That doesn't quite make sense.");
-			}
+			//}
 			System.out.println();
 		}
 	}	
@@ -104,7 +102,7 @@ public class Base {
 		boolean doesNounExist = false;
 		int space = input.indexOf(" ");
 		
-		if(space == -1){
+		if(!(space == -1)){
 			String foundVerb = input.substring(0,space);
 			String foundNoun = input.substring(space);
 
@@ -118,8 +116,9 @@ public class Base {
 				}
 			if(!doesNounExist)
 				System.out.println("You can't see such an item.");
-		}else
-			System.out.println("That doesn't quite make sense.");
+		}else{
+			String foundVerb = findVerb();
+		}
 	}
 	
 	public static void main (String str[]) {
