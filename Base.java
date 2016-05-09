@@ -76,7 +76,7 @@ public class Base {
 				checkInput(input);
 			//}
 			//catch (Exception a){
-				System.out.println("That doesn't quite make sense.");
+				//System.out.println("That doesn't quite make sense.");
 			//}
 			System.out.println();
 		}
@@ -110,14 +110,26 @@ public class Base {
 				if(current.itemName == foundNoun){
 					doesNounExist = true;
 					if(current.isActionPossible(foundVerb))
-						Verb.findAction(foundVerb);
+						//VerbMain.findVerb(foundVerb);
+						System.out.print("debug");
+					else
+						System.out.print("How will you manage that?");	
+				}
+			for(int count = 0; count < PlayerInfo.playerRoom.items.size(); count++){
+				// sorry for using my crappy for loop again, but foreach doesn't like ArrayLists since they return Objects instead of Items
+				if(PlayerInfo.playerRoom.items.get(count) == foundNoun){
+					doesNounExist = true;
+					Verb runVerb = VerbMain.findVerb(foundVerb);
+					runVerb.action();
+				}
 					else
 						System.out.print("How will you manage that?");	
 				}
 			if(!doesNounExist)
 				System.out.println("You can't see such an item.");
 		}else{
-			String foundVerb = findVerb();
+			Verb runVerb = VerbMain.findVerb(input);
+			runVerb.action();
 		}
 	}
 	
