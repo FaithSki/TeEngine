@@ -8,6 +8,8 @@ public class Base {
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	
+	public static Room playerRoom = new Room("","","",items,exits);
+	
 	//TODO: clean this crap up, I have no idea what you did that you still need so if you dont need it then delete it
 	
 	public static void runGame(){
@@ -48,36 +50,36 @@ public class Base {
 
 		Scanner sc = new Scanner(System.in);
 		// Just laying a groundwork to show how the actual game-loop will work.
-		PlayerInfo.playerRoom = pastaParlor;
+		playerRoom = pastaParlor;
 		while (itsHappening = true){
 			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
 			// use the short description after every turn, "look" for long description
-			System.out.println(PlayerInfo.playerRoom.roomName()); 
+			System.out.println(playerRoom.roomName()); 
 			// playerRoom references whatever room the player is currently in, I guess??
-			if (PlayerInfo.playerRoom.visited() == false){
+			if (playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
 				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
 				// choose whether you get shortdescriptions or the full description everytime (most infocom interactive fictions have something like that).
-				System.out.println(PlayerInfo.playerRoom.roomDesc());
+				System.out.println(playerRoom.roomDesc());
 			}
 			else{
-				System.out.println(PlayerInfo.playerRoom.roomShortDesc());
+				System.out.println(playerRoom.roomShortDesc());
 			}
 			System.out.print(">_ ");
 
 			String input = sc.nextLine();
-			PlayerInfo.playerRoom.visited = true;
+			playerRoom.visited = true;
 			System.out.println();
 			// at this point, we need to be able to detect a noun & a verb in the input. common verbs will be easy; "take" will just add a pickupable item
 			// to an inventory arraylist; "drop" will add the item to the playerRoom's item arraylist; examine will print the itemdescription. I don't know
 			// how we're going to handle the logic for unique interactions, like "use fork with spaghetti" or "screw in lightbulb."
 			// "use <Item1> with <Item2>" will have to be a special case, and "screw in" can be a Verb associated with a lightbulb
-			//try{
+			try{
 				checkInput(input);
-			//}
-			//catch (Exception a){
-				//System.out.println("That doesn't quite make sense.");
-			//}
+			}
+			catch (Exception a){
+				System.out.println("That doesn't quite make sense.");
+			}
 			System.out.println();
 		}
 	}	
@@ -99,43 +101,62 @@ public class Base {
 				//input must be in order "verb noun" for now
 				//we might want to find a more flexible way to get the input, maybe find the verb keyword FIRST and then find the relating nouns
 				//each verb could have a specific format, maybe if it finds "eat" and "with" it will get the "eat with" verb in the "eat 'noun' with 'noun'" format, looking for words before and after with, including spaces
-		boolean doesNounExist = false;
-		int space = input.indexOf(" ");
 		
-		if(!(space == -1)){
-			String foundVerb = input.substring(0,space);
-			String foundNoun = input.substring(space);
+		/*
+		 * What I was saying to do with this method
+		 * 
+		 * have arrays of strings
+		 * 
+		 * String[] format = {"use","(Item)","with","(Item)"};
+		 * String[] separatedInput = {"use","memes","with","sauce"};
+		 * 
+		 * It will be easy to handle in this manner
+		 * but will the engine handle
+		 */
+		boolean works = true;
+		//TODO there are some big things wrong with the framework of the method(what does it do once it finds nouns and verbs, you cant put them both into an array) but the basic idea is that it goes through each item in the array and finds what it is
+		//I have an idea ill write down later
+		String[] separatedInput = input.split(" ");
+		// we should also think about how to work exits into this method
+		for(String word : separatedInput){
+			if(works = true)
+				if(Item.isItem(word)){
+					if(PlayerInfo.isItemOwned){
+					
+					
+				}
+			}
+		}	
+			
+		/*	
+		Ignore for now, rewriting again
+		 
+		boolean doesNounExist = false;
+		int space = input.indexOf(" "); 
+		 
+		if(space == -1){
 
 			for(Item current : PlayerInfo.inventory)
 				if(current.itemName == foundNoun){
 					doesNounExist = true;
-					if(current.isActionPossible(foundVerb))
-						//VerbMain.findVerb(foundVerb);
-						System.out.print("debug");
-					else
-						System.out.print("How will you manage that?");	
-				}
-			for(int count = 0; count < PlayerInfo.playerRoom.items.size(); count++){
-				// sorry for using my crappy for loop again, but foreach doesn't like ArrayLists since they return Objects instead of Items
-				if(PlayerInfo.playerRoom.items.get(count) == foundNoun){
-					doesNounExist = true;
-					Verb runVerb = VerbMain.findVerb(foundVerb);
-					runVerb.action();
-				}
+					if(current.isActionPossible(foundVerb)) // gotta get a verb
+						Verb.findAction(foundVerb);
 					else
 						System.out.print("How will you manage that?");	
 				}
 			if(!doesNounExist)
 				System.out.println("You can't see such an item.");
-		}else{
-			Verb runVerb = VerbMain.findVerb(input);
-			runVerb.action();
-		}
+		}else
+			System.out.println("That doesn't quite make sense.");
+		*/
 	}
 	
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
-		runGame();
+		//runGame();
 		//checkInput(input.nextLine());
+		for(String t : "ayy bee cee".split(" "))
+			System.out.println(t);
+		//TODO: look at meeeee TODO: look at dis shiznitt, makes things simple
 	}
 }

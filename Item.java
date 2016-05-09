@@ -9,7 +9,7 @@ import java.util.ArrayList;
  	boolean dropAble; // Can the item be dropped into a room?
  	boolean visible; // Can the item be seen when the room is examined?
  	Room location;
- 	public String[] possibleActions;
+ 	public Verb[] possibleActions;
 	//public String cantInteractText;
 	// I'd rather not do it like that, cuz we'd want a different message for being unable to pickup, unable to drop, unable to use, etc
  	public String cantPickUpMessage;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
 	public static Item[] allItems;
  	
- 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, String inputPossibleActions[], String inputCantPickUp){
+ 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, Verb inputPossibleActions[], String inputCantPickUp){
  		itemName = inputName;
  		itemDescription = inputDescription;
  		pickupAble = inputPickupAble;
@@ -28,11 +28,25 @@ import java.util.ArrayList;
  		cantPickUpMessage = inputCantPickUp;
  	}
  	
- 	public boolean isActionPossible(String verb){
- 		for(String action : possibleActions)
- 			if(action.equalsIgnoreCase(verb))
+ 	public boolean isActionPossible(Verb checkVerb){
+ 		for(Verb action : possibleActions)
+ 			if(action == checkVerb) // must point to the same instance, look into this later
  				return true;
  		return false;
+ 	}
+ 	
+ 	public static boolean isItem(String word){
+ 		for(Item currentItem : allItems)
+ 			if(word.equalsIgnoreCase(currentItem.itemName))
+ 				return true;
+ 		return false;
+ 	}
+ 	
+ 	public static Item getItem(String word){
+ 		for(Item currentItem : allItems)
+ 			if(word.equalsIgnoreCase(currentItem.itemName))
+ 				return currentItem;
+ 		return null;
  	}
  	
  	// Following methods all just retrieve variables
