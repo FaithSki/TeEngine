@@ -1,0 +1,5 @@
+It's looking like you accidentally worked on an older version of the classes for the last push you made, unless that was intentional.
+From what I can see on the Master branch, all of your stuff with class-based Verbs (as opposed to method-based Verbs) is gone, along
+with other stuff you suggested like moving playerRoom from Base to PlayerInfo.
+
+Just-in-case you didn't mean to do that, I'm holding on to the current version I have; I'm scared to erase one or the other.
