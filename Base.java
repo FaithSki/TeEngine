@@ -8,8 +8,6 @@ public class Base {
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	
-	public static Room playerRoom = new Room("","","",items,exits);
-	
 	//TODO: clean this crap up, I have no idea what you did that you still need so if you dont need it then delete it
 	
 	public static void runGame(){
@@ -116,8 +114,30 @@ public class Base {
 		boolean works = true;
 		//TODO there are some big things wrong with the framework of the method(what does it do once it finds nouns and verbs, you cant put them both into an array) but the basic idea is that it goes through each item in the array and finds what it is
 		//I have an idea ill write down later
+		/*
+		 * ok my idea is that (this sucks if you want to have multi-word items)
+		 * make 3 arrays
+		 * Item[] inputItem = {null,meme,null,sauce};
+		 * String[] inputVerb = {"use","(Item)","with","(Item)"}; any items or exits found in the separated input will be put as "(Item)" or "(Exit)"
+		 * String[] inputExit = you get it by nown like inputItem
+		 * 
+		 * a method in the verb class will match input verb with the format, and then it will look for items in the same space 
+		 * once it finds the verb it will pass the action the required items and/or exits or nothing(maybe have to be null?), in order
+		 */
+		
+		
 		String[] separatedInput = input.split(" ");
-		// we should also think about how to work exits into this method
+		Item[] inputItem = new Item[separatedInput.length];
+		String[] inputVerb = new String[separatedInput.length];
+		Exit[] inputExit = new Exit[separatedInput.length];
+		
+		/*
+		 *  I think i have to use ugly for loops to make this work 
+		 *  
+		 *  :(((((((((((((
+		 *  
+		 *  it will tell you that your shit dont work in the verb method
+		 */
 		for(String word : separatedInput){
 			if(works = true)
 				if(Item.isItem(word)){
@@ -135,7 +155,6 @@ public class Base {
 		int space = input.indexOf(" "); 
 		 
 		if(space == -1){
-
 			for(Item current : PlayerInfo.inventory)
 				if(current.itemName == foundNoun){
 					doesNounExist = true;
