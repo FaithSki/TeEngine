@@ -10,21 +10,22 @@ public abstract class Verb {
 	}
 	
 	public class take extends Verb {
-		public String name = "take";
-		public String format = "take (Item)"; // a central method would replace any (Item)s and do something with it to make it work, something would look for items in those (Item) slots
+		public String name = "take", format[] = {"take","(Item)"}; // a central method would replace any (Item)s and do something with it to make it work, something would look for items in those (Item) slots
 		//take(Item toTake){
 		//	PlayerInfo.inventory.add(toTake);
 		//}
-		public void action() {
-			PlayerInfo.inventory.add(verbItem);
-			PlayerInfo.playerRoom.items.remove(verbItem);
-			System.out.println("You take the " + verbItem.itemName);
+		public void action(Item takeItem) {
+			if(takeItem.location == PlayerInfo.playerRoom && takeItem.visible){
+				PlayerInfo.inventory.add(PlayerInfo.playerRoom.items.remove(takeItem));
+				
+				System.out.println("You take the " + takeItem.itemName + ".");
+			}else
+				System.out.println("You don't see such an item.");
 		}
 	}
 	
 	public static class look extends Verb {
-		public static String name = "look";
-		public static String format = "look";
+		public static String name = "look", format[] = {"look"};
 		public void action(){
 			System.out.println(PlayerInfo.playerRoom.roomDesc);
 		}
