@@ -48,25 +48,25 @@ public class Base {
 
 		Scanner sc = new Scanner(System.in);
 		// Just laying a groundwork to show how the actual game-loop will work.
-		playerRoom = pastaParlor;
+		PlayerInfo.playerRoom = pastaParlor;
 		while (itsHappening = true){
 			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
 			// use the short description after every turn, "look" for long description
-			System.out.println(playerRoom.roomName()); 
+			System.out.println(PlayerInfo.playerRoom.roomName()); 
 			// playerRoom references whatever room the player is currently in, I guess??
-			if (playerRoom.visited() == false){
+			if (PlayerInfo.playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
 				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
 				// choose whether you get shortdescriptions or the full description everytime (most infocom interactive fictions have something like that).
-				System.out.println(playerRoom.roomDesc());
+				System.out.println(PlayerInfo.playerRoom.roomDesc());
 			}
 			else{
-				System.out.println(playerRoom.roomShortDesc());
+				System.out.println(PlayerInfo.playerRoom.roomShortDesc());
 			}
 			System.out.print(">_ ");
 
 			String input = sc.nextLine();
-			playerRoom.visited = true;
+			PlayerInfo.playerRoom.visited = true;
 			System.out.println();
 			// at this point, we need to be able to detect a noun & a verb in the input. common verbs will be easy; "take" will just add a pickupable item
 			// to an inventory arraylist; "drop" will add the item to the playerRoom's item arraylist; examine will print the itemdescription. I don't know
@@ -138,7 +138,7 @@ public class Base {
 		 *  
 		 *  it will tell you that your shit dont work in the verb method
 		 */
-		for(String word : separatedInput){
+		/*for(String word : separatedInput){
 			if(works = true)
 				if(Item.isItem(word)){
 					if(PlayerInfo.isItemOwned){
@@ -146,7 +146,7 @@ public class Base {
 					
 				}
 			}
-		}	
+		}*/	
 			
 		/*	
 		Ignore for now, rewriting again
@@ -172,7 +172,7 @@ public class Base {
 	
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
-		//runGame();
+		runGame();
 		//checkInput(input.nextLine());
 		for(String t : "ayy bee cee".split(" "))
 			System.out.println(t);
