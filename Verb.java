@@ -15,12 +15,15 @@ public abstract class Verb {
 		//	PlayerInfo.inventory.add(toTake);
 		//}
 		public void action(Item takeItem) {
-			if(takeItem.location == PlayerInfo.playerRoom && takeItem.visible){
-				PlayerInfo.inventory.add(PlayerInfo.playerRoom.items.remove(takeItem));
-				
+			if(takeItem.location == PlayerInfo.playerRoom && takeItem.visible && takeItem.pickupAble){
+				PlayerInfo.inventory.add(takeItem);
+				PlayerInfo.playerRoom.items.remove(takeItem);
 				System.out.println("You take the " + takeItem.itemName + ".");
 			}else
-				System.out.println("You don't see such an item.");
+				System.out.println(takeItem.cantPickUpMessage);
+		}
+		public void action(){
+			// this does nothing
 		}
 	}
 	
@@ -28,6 +31,19 @@ public abstract class Verb {
 		public static String name = "look", format[] = {"look"};
 		public void action(){
 			System.out.println(PlayerInfo.playerRoom.roomDesc);
+		}
+	}
+	
+	public static class examine extends Verb {
+		public String name = "examine", format[] = {"examine","(Item)"};
+		public void action(Item examineItem) {
+			if (((examineItem.location == PlayerInfo.playerRoom) || (PlayerInfo.isItemOwned(examineItem))) && examineItem.visible){
+				System.out.println(examineItem.itemDescription);
+			}
+			System.out.println("You can't see anything like that.");
+		}
+		public void action() {
+			// this does nothing
 		}
 	}
 }
