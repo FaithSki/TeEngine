@@ -7,8 +7,14 @@ public class Base {
 	public static boolean itsHappening = true;
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
-	
-	//TODO: clean this crap up, I have no idea what you did that you still need so if you dont need it then delete it
+	/*
+	Hey look at me
+			We should have a "game" class
+			runGame will take an instance of that class in a parameter (or an extension of it) with all items, verbs, rooms, etc.
+			it will stay in a variable so that it can be accessed for later use
+			
+			the game loop shouldn't have to be that complicated, It will output a starting sequence(if it has one) then ill evaluate the room then call checkInput with your input, the verbs will probably direct most of the action
+	*/
 	
 	public static void runGame(){
 		// Start constructing all game objects 
@@ -53,7 +59,7 @@ public class Base {
 			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
 			// use the short description after every turn, "look" for long description
 			System.out.println(PlayerInfo.playerRoom.roomName()); 
-			// playerRoom references whatever room the player is currently in, I guess??
+			// PlayerInfo.playerRoom references whatever room the player is currently in, I guess??
 			if (PlayerInfo.playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
 				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
@@ -127,9 +133,9 @@ public class Base {
 		
 		
 		String[] separatedInput = input.split(" ");
-		Item[] inputItem = new Item[separatedInput.length];
-		String[] inputVerb = new String[separatedInput.length];
-		Exit[] inputExit = new Exit[separatedInput.length];
+		Item[] items = new Item[separatedInput.length];
+		String[] verbs = new String[separatedInput.length];
+		Exit[] exits = new Exit[separatedInput.length];
 		
 		/*
 		 *  I think i have to use ugly for loops to make this work 
@@ -138,15 +144,15 @@ public class Base {
 		 *  
 		 *  it will tell you that your shit dont work in the verb method
 		 */
-		/*for(String word : separatedInput){
-			if(works = true)
-				if(Item.isItem(word)){
-					if(PlayerInfo.isItemOwned){
-					
-					
+		for(int i = 0;i <= separatedInput.length;i++){
+			if(Item.isItem(separatedInput[i])){
+				if(PlayerInfo.isItemOwned(Item.getItem(separatedInput[i]))){ // I will change it to not check if its in the inventory until verb, for things like take
+					items[i] = Item.getItem(separatedInput[i]);
 				}
-			}
-		}*/	
+			}else if() // this is gonna be the same as with items, but for exits. 
+		}	
+		
+		
 			
 		/*	
 		Ignore for now, rewriting again
@@ -174,8 +180,5 @@ public class Base {
 		//Scanner input = new Scanner(System.in);
 		runGame();
 		//checkInput(input.nextLine());
-		for(String t : "ayy bee cee".split(" "))
-			System.out.println(t);
-		//TODO: look at meeeee TODO: look at dis shiznitt, makes things simple
 	}
 }
