@@ -8,14 +8,14 @@ import java.util.ArrayList;
  	boolean useAble; // Can the item be interacted with? (Use, Combine, Open, etc)
  	boolean dropAble; // Can the item be dropped into a room?
  	boolean visible; // Can the item be seen when the room is examined?
- 	Room location;
+ 	public Room location;
  	public Verb[] possibleActions;
 	//public String cantInteractText;
 	// I'd rather not do it like that, cuz we'd want a different message for being unable to pickup, unable to drop, unable to use, etc
  	public String cantPickUpMessage;
  	public String cantDropMessage;
  	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
-	public static Item[] allItems;
+ 	public static ArrayList<Item> allItems = new ArrayList<Item>();
  	
  	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, Verb inputPossibleActions[], String inputCantPickUp){
  		itemName = inputName;
@@ -26,6 +26,7 @@ import java.util.ArrayList;
  		visible = inputVisible;
  		possibleActions = inputPossibleActions;
  		cantPickUpMessage = inputCantPickUp;
+ 		allItems.add(this);
  	}
  	
  	public boolean isActionPossible(Verb checkVerb){
