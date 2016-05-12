@@ -5,8 +5,7 @@ public class Base {
 	 *I feel that if we're going to have a game engine then we should have the engine, that interacts with another class containing the actual content of our game(items, rooms, verbs) 
 	 */
 	public static boolean itsHappening = true;
-	public static ArrayList<Exit> exits = new ArrayList<Exit>();
-	public static ArrayList<Item> items = new ArrayList<Item>();
+	public static Game mainSet = new Game();
 	/*
 	Hey look at me
 			We should have a "game" class
@@ -17,48 +16,17 @@ public class Base {
 	*/
 	
 	public static void runGame(){
-		// Start constructing all game objects 
-		
-		/*Item constructor takes, in this order: 
-		 * Name (String)
-		 * Description (String)
-		 * Pickupable (boolean)
-		 * Usable (boolean)
-		 * Dropable (boolean)
-		 * Visible (boolean)
-		 * Possible Actions (String array)
-		 * Cantpickupmessage (String) 
-		 */
-		String[] memeActions = {"examine","post"};
-		Item meme = new Item("Meme","An unusually shiny item.",true,false,true,true,memeActions,"You can't quite get a grip on it.");
-		String[] spaghettiActions = {"examine","eat"};
-		Item spaghetti = new Item("Bowl of spaghetti","A blue plastic bowl, filled to the brim with tasty pasta.",true,true,true,true,spaghettiActions,"It's bolted to the table!");
-		String[] actions = {"examine","eat"};
-		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions,"It's too slippery!");
-		String[] generalActions = {"look","take"};//take maybe should be on the item side and not the "general actions" side
-		Item blank = new Item("","",false,false,false,false,generalActions,"");
-		items.add(blank);
-		/*Room constructor takes, in this order: 
-		 * Name (String)
-		 * Description (String)
-		 * Short Description (String)
-		 * Exits (ArrayList)
-		 * Items (ArrayList)
-		 */
-		items.add(meme);
-		Room dankDungeon = new Room("DUNGEON","A dark, dank expanse of cobbled stone, forming the room around you.","A dark cobblestone room.",items,exits);
-		resetRoomArrayLists();
-		items.add(spaghetti);
-		Room pastaParlor = new Room("PASTA PARLOR","A quaint little Italian resturaunt. The tables are covered with red-and-white checkered tableclothes and stacked high with bowls of spaghetti, but no other patrons are visible.","An empty Italian resturaunt.",items,exits);
-		// End constructing all game objects
 
 		Scanner sc = new Scanner(System.in);
-		// Just laying a groundwork to show how the actual game-loop will work.
-		PlayerInfo.playerRoom = pastaParlor;
+		System.out.println("You just woke up in an unfamiliar apartment in a bed that isn't yours, with no clue how you got here or how to leave.");
+		System.out.println("Seems that it's up to you to find your way out. Type 'help' for information on how to play.  You can hear rain outside.");
+		System.out.println();
+		PlayerInfo.playerRoom = mainSet.pastaParlor;
 		while (itsHappening = true){
 			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
 			// use the short description after every turn, "look" for long description
 			System.out.println(PlayerInfo.playerRoom.roomName()); 
+			// getting a null pointer exception here. I think that there's something wrong with how I did the Game class.
 			// PlayerInfo.playerRoom references whatever room the player is currently in, I guess??
 			if (PlayerInfo.playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
@@ -87,10 +55,6 @@ public class Base {
 			System.out.println();
 		}
 	}	
-	public static void resetRoomArrayLists(){
-		exits = new ArrayList<Exit>();
-		items = new ArrayList<Item>();
-	}
 	
 	private static void checkInput(String input){
 		/* What needs to go on here
@@ -142,14 +106,16 @@ public class Base {
 		 *  
 		 *  :(((((((((((((
 		 *  
-		 *  it will tell you that your shit dont work in the verb method
+		 *  it will tell you that your stuff dont work in the verb method
 		 */
 		for(int i = 0;i <= separatedInput.length;i++){
 			if(Item.isItem(separatedInput[i])){
 				if(PlayerInfo.isItemOwned(Item.getItem(separatedInput[i]))){ // I will change it to not check if its in the inventory until verb, for things like take
 					items[i] = Item.getItem(separatedInput[i]);
 				}
-			}else if() // this is gonna be the same as with items, but for exits. 
+			}else if(true){
+				// this is gonna be the same as with items, but for exits. 
+			}
 		}	
 		
 		
