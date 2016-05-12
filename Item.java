@@ -2,7 +2,7 @@ import java.util.ArrayList;
  
  
  public class Item {
- 	String itemName; // What the item is referenced as.
+ 	String itemName[]; // What the item is referenced as.
  	String itemDescription; // What the player sees upon Examining the item.
  	boolean pickupAble; // Can the item be picked up?
  	boolean useAble; // Can the item be interacted with? (Use, Combine, Open, etc)
@@ -10,8 +10,6 @@ import java.util.ArrayList;
  	boolean visible; // Can the item be seen when the room is examined?
  	public Room location;
  	public Verb[] possibleActions;
-	//public String cantInteractText;
-	// I'd rather not do it like that, cuz we'd want a different message for being unable to pickup, unable to drop, unable to use, etc
  	public String cantPickUpMessage;
  	public String cantDropMessage;
  	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
@@ -37,6 +35,13 @@ import java.util.ArrayList;
  	}
  	
  	public static boolean isItem(String word){
+ 		for(Item currentItem : allItems)
+ 			if(word.equalsIgnoreCase(currentItem.itemName))
+ 				return true;
+ 		return false;
+ 	}
+ 	
+ 	public static boolean isItem(String firstWord, String secondWord){
  		for(Item currentItem : allItems)
  			if(word.equalsIgnoreCase(currentItem.itemName))
  				return true;
