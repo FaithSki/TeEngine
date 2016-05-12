@@ -1,7 +1,12 @@
 public class Exit {
 	
 	String room1; // One of the two rooms that the Exit leads between; this room should be encountered before room2
-	String room2; // One of the two rooms that the Exit leads between; this room should be encountered after room1           I dont get what youre saying for these 4 string things
+	String room2; // One of the two rooms that the Exit leads between; this room should be encountered after room1
+	// [room1] <---> (exit) <---> [room2]
+	// in room 1, exit is called "east" (room1Names = "east, e")
+	// in room 2, exit is called "west" (room2Names = "west, w")
+	// the player would, organizationally, have to go through room 1 before they've been in room 2, but that's totally 
+	// not neccessary at all.
 	String[] room1Names; // What the Exit is called in room1; should be cardinal directions, if possible (n & north, se & southeast, etc)
 	String[] room2Names; // What the Exit is called in room2; should be cardinal directions, if possible (n & north, se & southeast, etc)
 	boolean locked; // Can the Player travel through the Exit?
