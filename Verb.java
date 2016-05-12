@@ -39,4 +39,15 @@ public class Verb {
 			System.out.println("You can't see anything like that.");
 		}
 	}
+	
+	public static class examine extends Verb {
+		public String name = "examine", format[] = {"examine","(Item)"};
+		
+		public void action(Item examineItem) {
+			if (((examineItem.location == PlayerInfo.playerRoom) || (PlayerInfo.isItemOwned(examineItem))) && examineItem.visible){
+				System.out.println(examineItem.itemDescription);
+			}
+			System.out.println("You can't see anything like that.");
+		}
+	}
 }
