@@ -1,26 +1,19 @@
 import java.util.ArrayList;
 
+
 public class Game {
 	
 	// Am I understanding this correctly?
 	
-	// yeah sorta
-	
-	// dont need arraylists because those are in their respective classes and will be added automatically in the constructor
-	// unless they are for something I'm not understanding
-	
-	// we shouldn't need a constructor, 
+	public static ArrayList<Exit> exits = new ArrayList<Exit>();
+	public static ArrayList<Item> items = new ArrayList<Item>();
 
-	private static ArrayList<Item> items = new ArrayList<Item>();
-	private static ArrayList<Exit> exits = new ArrayList<Exit>();
-	
-	public Item meme;
-	public Item spaghetti;
-	public Item fettuccine;
+	public Item bed;
+	public Item window;
+	public Item television;
 	public Item blank;
 	
-	public Room dankDungeon;
-	public Room pastaParlor;
+	public Room startApartment;
 	
 	public Game(){
 		// Start constructing all game objects 
@@ -35,12 +28,12 @@ public class Game {
 		 * Possible Actions (String array)
 		 * Cantpickupmessage (String) 
 		 */
-		Verb[] memeActions = {null};
-		Item meme = new Item("Meme","An unusually shiny item.",true,false,true,true,memeActions,"You can't quite get a grip on it.");
-		Verb[] spaghettiActions = {null};
-		Item spaghetti = new Item("Bowl of spaghetti","A blue plastic bowl, filled to the brim with tasty pasta.",true,true,true,true,spaghettiActions,"It's bolted to the table!");
-		Verb[] actions = {null};
-		Item fettuccine = new Item("Fettuccine","delicious",true,true,true,true,actions,"It's too slippery!");
+		Verb[] bedActions = {null};
+		Item bed = new Item("Bed","Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
+		Verb[] windowActions = {null};
+		Item window = new Item("Window","The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with blue lights from thousands of lit windows and street lights. It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.");
+		Verb[] televisionActions = {null};
+		Item television = new Item("Television","An old beat-up trideo television set, packed into a neat box with a screen and a lens. The 3D projector’s busted, but the old-school flatscreen looks fine.",false,true,false,true,televisionActions,"It's a bit too heavy to just lug it around.");
 		Verb[] generalActions = {null};//take maybe should be on the item side and not the "general actions" side
 		Item blank = new Item("","",false,false,false,false,generalActions,"");
 		items.add(blank);
@@ -51,11 +44,8 @@ public class Game {
 		 * Exits (ArrayList)
 		 * Items (ArrayList)
 		 */
-		items.add(meme);
-		Room dankDungeon = new Room("DUNGEON","A dark, dank expanse of cobbled stone, forming the room around you.","A dark cobblestone room.",items,exits);
-		resetRoomArrayLists();
-		items.add(spaghetti);
-		Room pastaParlor = new Room("PASTA PARLOR","A quaint little Italian resturaunt. The tables are covered with red-and-white checkered tableclothes and stacked high with bowls of spaghetti, but no other patrons are visible.","An empty Italian resturaunt.",items,exits);
+		items.add(bed);items.add(window);items.add(television);
+		Room startApartment = new Room("APARTMENT","You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed. The ceiling light is off. You can hear rain outside.",items,exits);
 		// End constructing all game objects
 	}
 	
