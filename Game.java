@@ -5,6 +5,9 @@ public class Game {
 	
 	// Am I understanding this correctly?
 	
+	
+	//you should be able to just put the instance of stuff in the variable declaration, not sure if constructor is needed
+	//and when things are created they are automatically added to the arraylist of allWhatevers for the whole program
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
 
