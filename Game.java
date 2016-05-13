@@ -1,13 +1,19 @@
 import java.util.ArrayList;
 
-
 public class Game {
 	
 	// Am I understanding this correctly?
 	
-	public static ArrayList<Exit> exits = new ArrayList<Exit>();
-	public static ArrayList<Item> items = new ArrayList<Item>();
+	// yeah sorta
+	
+	// dont need arraylists because those are in their respective classes and will be added automatically in the constructor
+	// unless they are for something I'm not understanding
+	
+	// we shouldn't need a constructor, 
 
+	private static ArrayList<Item> items = new ArrayList<Item>();
+	private static ArrayList<Exit> exits = new ArrayList<Exit>();
+	
 	public Item meme;
 	public Item spaghetti;
 	public Item fettuccine;
