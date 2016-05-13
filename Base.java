@@ -7,7 +7,7 @@ public class Base {
 	public static boolean itsHappening = true;
 	public static Game mainSet = new Game();
 	/*
-	holy gosh I didnt realize that the 5/17 due date was for seniors, ours is due on the 24th and we have a whole extra week than what I thought -_-
+	oh my gosh golly I didnt realize that the 5/17 due date was for seniors, ours is due on the 24th and we have a whole extra week than what I thought -_-
 	  
 	Hey look at me
 	
@@ -90,10 +90,8 @@ public class Base {
 		
 		String[] separatedInput = input.split(" ");
 		Item[] items = new Item[separatedInput.length];
-		String[] verbs = new String[separatedInput.length];
+		String[] verbStrings = new String[separatedInput.length];
 		Exit[] exits = new Exit[separatedInput.length];
-		// this is annoying, to make multi-word things I'm using 2d arrays, really having to think of them as arrays of arrays
-		Item[][] test = {{null}};
 		
 		/*
 		 * What its gonna have to do is if it finds nothing with the name it will go to an alternate item method where it takes n and n+1
@@ -103,15 +101,17 @@ public class Base {
 		 *  :(((((((((((((
 		 *  it will tell you that your stuff dont work or you cant see it in the verb method
 		 */
+		// the way it currently works now is that anything that is not a noun is passed to verb as something else, do you want it to be able to say "that is not an item"?
 		for(int i = 0;i <= separatedInput.length;i++){
-			if(Item.isItem(separatedInput[i])){
-				if(PlayerInfo.isItemOwned(Item.getItem(separatedInput[i]))){ // I will change it to not check if its in the inventory until verb, for things like take
+			if(Item.isItem(separatedInput[i]))
 					items[i] = Item.getItem(separatedInput[i]);
-				}
-			}else if(){
-				// this is gonna be the same as with items, but for exits. 
-			}
+			else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
+				items[i] = Item.getItem(separatedInput[i]);
+				i++;
+				items[i] = null; // when it finds a 2-word item it makes the next items element null and it then moves past it
+			}else if(Exit.isExit(separatedInput[i]))
 		}	
+
 	}
 	
 	public static void main (String str[]) {
