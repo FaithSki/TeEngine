@@ -15,7 +15,7 @@ import java.util.ArrayList;
  	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
  	public static ArrayList<Item> allItems = new ArrayList<Item>();
  	
- 	Item(String inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, Verb inputPossibleActions[], String inputCantPickUp){
+ 	Item(String[] inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, Verb inputPossibleActions[], String inputCantPickUp){
  		itemName = inputName;
  		itemDescription = inputDescription;
  		pickupAble = inputPickupAble;
@@ -36,28 +36,35 @@ import java.util.ArrayList;
  	
  	public static boolean isItem(String word){
  		for(Item currentItem : allItems)
- 			if(word.equalsIgnoreCase(currentItem.itemName))
+ 			if(word.equalsIgnoreCase(currentItem.itemName[0]))
  				return true;
  		return false;
  	}
  	
  	public static boolean isItem(String firstWord, String secondWord){
  		for(Item currentItem : allItems)
- 			if(word.equalsIgnoreCase(currentItem.itemName))
+ 			if(firstWord.equalsIgnoreCase(currentItem.itemName[0]) && secondWord.equalsIgnoreCase(currentItem.itemName[1]))
  				return true;
  		return false;
  	}
  	
  	public static Item getItem(String word){
  		for(Item currentItem : allItems)
- 			if(word.equalsIgnoreCase(currentItem.itemName))
+ 			if(word.equalsIgnoreCase(currentItem.itemName[0]))
+ 				return currentItem;
+ 		return null;
+ 	}
+ 	
+ 	public static Item getItem(String firstWord, String secondWord){
+ 		for(Item currentItem : allItems)
+ 			if(firstWord.equalsIgnoreCase(currentItem.itemName[0]) && secondWord.equalsIgnoreCase(currentItem.itemName[1]))
  				return currentItem;
  		return null;
  	}
  	
  	// Following methods all just retrieve variables
- 	public String itemName(){
- 		return itemName;
+ 	public String itemName(int whichWord){
+ 		return itemName[whichWord];
  	}
  	public String itemDescription(){
  		return itemDescription;
