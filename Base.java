@@ -7,7 +7,7 @@ public class Base {
 	public static boolean itsHappening = true;
 	public static Game mainSet = new Game();
 	/*
-	holy fuck I didnt realize that the 5/17 due date was for seniors, ours is due on the 24th and we have a whole extra week than what I thought -_-
+	holy gosh I didnt realize that the 5/17 due date was for seniors, ours is due on the 24th and we have a whole extra week than what I thought -_-
 	  
 	Hey look at me
 	
@@ -22,18 +22,20 @@ public class Base {
 	*/
 	
 	public static void runGame(){
+		
+		Game mainSet = new Game();
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("You just woke up in an unfamiliar apartment in a bed that isn't yours, with no clue how you got here or how to leave.");
 		System.out.println("Seems that it's up to you to find your way out. Type 'help' for information on how to play.  You can hear rain outside.");
 		System.out.println();
-		PlayerInfo.playerRoom = mainSet.pastaParlor;
+		PlayerInfo.playerRoom = mainSet.startApartment;
 		while (itsHappening = true){
-			// maybe we should stop printing the roomname + roomdesc/shortdesc after your first "turn" in a room, until you change rooms
-			// use the short description after every turn, "look" for long description
 			System.out.println(PlayerInfo.playerRoom.roomName()); 
-			// getting a null pointer exception here. I think that there's something wrong with how I did the Game class.
-			// PlayerInfo.playerRoom references whatever room the player is currently in, I guess??
+			// this keeps hitting a null pointer exception (!!!). we might need to just totally revert all of the Game class stuff, idkkkk.
+			// I moved all of the Game constructor stuff into a method under Base and then i thought that i knew how to fix the null pointer
+			// so i reverted all of my changes and whooops my fix didn't work.
+			// i'm going to diiiieeee
 			if (PlayerInfo.playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
 				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
