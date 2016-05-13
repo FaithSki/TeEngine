@@ -47,12 +47,7 @@ public class Exit {
 		locked = toggle;
 	}
 	
-	public boolean isExit(Exit toCheck){
-		boolean is = true;
-		for(Exit exit : allExits);
-		
-			
-		
+	public boolean isExit(String word){
 			
 	}
 }
