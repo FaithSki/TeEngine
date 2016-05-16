@@ -18,16 +18,12 @@ public class Base {
 	public Room startApartment;
 	/*
 	oh my gosh golly I didnt realize that the 5/17 due date was for seniors, ours is due on the 24th and we have a whole extra week than what I thought -_-
-
 	Hey look at me
-
 	If you ever want multi-word items/exits or whatever it will be hard, so if you cant find a way around it then we can make special cases in Verb
 	we could try having an array for multi word items/exits like {"cardboard","box"} or {"brown","door"}
-
 			We should have a "game" class
 			runGame will take an instance of that class in a parameter (or an extension of it) with all items, verbs, rooms, etc.
 			it will stay in a variable so that it can be accessed for later use
-
 			the game loop shouldn't have to be that complicated, It will output a starting sequence(if it has one) then ill evaluate the room then call checkInput with your input, the verbs will probably direct most of the action
 	 */
 
@@ -62,8 +58,9 @@ public class Base {
 		 * Cantpickupmessage (String) 
 		 */
 		resetStringArrays();
+		//this I think should be in an extension of the verb class
 		Verb[] bedActions = {null};
-		String[] bedNames = {"Bed"};
+		String[] bedNames = {"Bed"}; // fyi this is not multiple names, this is for multiple words in an item like {"cardboard","box"}
 		itemNames = bedNames;
 		Item bed = new Item(itemNames,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
 		resetStringArrays();
@@ -160,27 +157,27 @@ public class Base {
 		String[] verbStrings = new String[separatedInput.length];
 		Exit[] exits = new Exit[separatedInput.length];
 
-		/*
-		 * What its gonna have to do is if it finds nothing with the name it will go to an alternate item method where it takes n and n+1
-		 * 
-		 *
-		 *  I think i have to use ugly for loops to make this work 
-		 *  :(((((((((((((
-		 *  it will tell you that your stuff dont work or you cant see it in the verb method
-		 */
+		
+		 // it will tell you that your stuff dont work or you cant see it in the verb method
+		 
 		// the way it currently works now is that anything that is not a noun is passed to verb as something else, do you want it to be able to say "that is not an item"?
 		for(int i = 0;i <= separatedInput.length;i++){
 			if(Item.isItem(separatedInput[i]))
 				items[i] = Item.getItem(separatedInput[i]);
 			else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
-				items[i] = Item.getItem(separatedInput[i]);
+				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
 				i++;
 				items[i] = null; // when it finds a 2-word item it makes the next items element null and it then moves past it
-			}else if(exits[i].isExit(separatedInput[i])){
-
-			}
+			}else if(Exit.isExit(separatedInput[i]))
+				exits[i] = Exit.getExit(separatedInput[i]);
+			else if(separatedInput.length < i && Exit.isExit(separatedInput[i],separatedInput[i + 1])){
+				exits[i] = Exit.getExit(separatedInput[i], separatedInput[i + 1]);
+				i++;
+				items[i] = null;
+			}else
+				verbStrings[i] = separatedInput[i];
 		}	
-
+		Verb.findAndExecuteAction(items, verbStrings, exits);
 	}
 
 	public static void main (String str[]) {
