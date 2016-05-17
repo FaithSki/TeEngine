@@ -61,7 +61,7 @@ public class Base {
 		//this I think should be in an extension of the verb class
 		Verb[] bedActions = {null};
 		String[] bedNames = {"Bed"}; // fyi this is not multiple names, this is for multiple words in an item like {"cardboard","box"}
-		itemNames = bedNames;
+		itemNames = bedNames; // whyyyyyyy dont you just put in bedNames, also its a name not names
 		Item bed = new Item(itemNames,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
 		System.out.println("DEBUG: Constructed Bed");
 		resetStringArrays();
@@ -82,8 +82,9 @@ public class Base {
 		for(Item currentItem : Item.allItems){
 			System.out.println("DEBUG: " + currentItem.itemName);
 		}
-		// TODO: is allItems supposed to be returning stuff like "[Ljava.lang.String;@1db9742"?
-		
+		// is allItems supposed to be returning stuff like "[Ljava.lang.String;@1db9742"?
+		// TODO: itemName is in an array now, when you try to output just an array into the console it gives the reference to it and not the contents of it
+		// I changed itemName() to combine the 2 words in a single string
 		resetStringArrays();
 		Item blank = new Item(itemNames,"",false,false,false,false,generalActions,"");
 		items.add(blank);
@@ -94,7 +95,10 @@ public class Base {
 		 * Exits (ArrayList)
 		 * Items (ArrayList)
 		 */
-		items.add(bed);items.add(window);items.add(television);
+		items.add(bed);
+		items.add(window);
+		items.add(television); // yo what is this u gotta separate your lines "items.add(bed);items.add(window);items.add(television);"
+		
 		Room startApartment = new Room("APARTMENT","You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed. The ceiling light is off. You can hear rain outside.",items,exits);
 		// End constructing all game objects
 
@@ -174,24 +178,29 @@ public class Base {
 			System.out.println("DEBUG: new for-loop iteration. i = " + i);
 			if(Item.isItem(separatedInput[i])){ // throws out-of-bounds w/ a 1 or a 2 when the for-loop uses "i <= seperatedInput.length"
 				items[i] = Item.getItem(separatedInput[i]);
+				verbStrings[i] = null;
 				System.out.println("DEBUG: one-word Item, i = " + i);
 			}
 			else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
 				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
+				verbStrings[i] = null;
 				i++;
 				items[i] = null; // when it finds a 2-word item it makes the next items element null and it then moves past it
 				System.out.println("DEBUG: two-word Item, i = " + i);
-			}
+			}/*
+			if we're just going to say "north" "s" then we shouldnt need this, but i'll keep it if we want secret or unconventional exits
 			else if(Exit.isExit(separatedInput[i])){
 				exits[i] = Exit.getExit(separatedInput[i]);
+				verbStrings[i] = null;
 				System.out.println("DEBUG: one-word Exit, i = " + i);
 			}
 			else if(separatedInput.length < i && Exit.isExit(separatedInput[i],separatedInput[i + 1])){
 				exits[i] = Exit.getExit(separatedInput[i], separatedInput[i + 1]);
+				verbStrings[i] = null;
 				i++;
 				items[i] = null;
 				System.out.println("DEBUG: two-word Exit, i = " + i);
-			}
+			}*/
 			else{
 				verbStrings[i] = separatedInput[i];
 				System.out.println("DEBUG: verb, i = " + i);
@@ -202,7 +211,9 @@ public class Base {
 
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
-		runGame();
+		//runGame();
 		//checkInput(input.nextLine());
+		String[] balla = new String[2];
+		System.out.println(balla[1]);
 	}
 }
