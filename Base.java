@@ -63,17 +63,26 @@ public class Base {
 		String[] bedNames = {"Bed"}; // fyi this is not multiple names, this is for multiple words in an item like {"cardboard","box"}
 		itemNames = bedNames;
 		Item bed = new Item(itemNames,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
+		System.out.println("DEBUG: Constructed Bed");
 		resetStringArrays();
 		Verb[] windowActions = {null};
 		String[] windowNames = {"Window"};
 		itemNames = windowNames;
 		Item window = new Item(itemNames,"The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with blue lights from thousands of lit windows and street lights. It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.");
+		System.out.println("DEBUG: Constructed Window");
 		resetStringArrays();
 		Verb[] televisionActions = {null};
-		String[] tvNames = {"Television"};
+		String[] tvNames = {"TV"};
 		itemNames = tvNames;
 		Item television = new Item(itemNames,"An old beat-up trideo television set, packed into a neat box with a screen and a lens. The 3D projector’s busted, but the old-school flatscreen looks fine.",false,true,false,true,televisionActions,"It's a bit too heavy to just lug it around.");
+		System.out.println("DEBUG: Constructed TV");
 		Verb[] generalActions = {null};//take maybe should be on the item side and not the "general actions" side
+		
+		System.out.println("DEBUG: Checking allItems");
+		for(Item currentItem : Item.allItems){
+			System.out.println("DEBUG: " + currentItem.itemName);
+		}
+		// TODO: is allItems supposed to be returning stuff like "[Ljava.lang.String;@1db9742"?
 		
 		resetStringArrays();
 		Item blank = new Item(itemNames,"",false,false,false,false,generalActions,"");
@@ -150,8 +159,7 @@ public class Base {
 		 * a method in the verb class will match input verb with the format, and then it will look for items in the same space 
 		 * once it finds the verb it will pass the action the required items and/or exits or nothing(maybe have to be null?), in order
 		 */
-
-
+		
 		String[] separatedInput = input.split(" ");
 		Item[] items = new Item[separatedInput.length];
 		String[] verbStrings = new String[separatedInput.length];
@@ -161,21 +169,33 @@ public class Base {
 		 // it will tell you that your stuff dont work or you cant see it in the verb method
 		 
 		// the way it currently works now is that anything that is not a noun is passed to verb as something else, do you want it to be able to say "that is not an item"?
-		for(int i = 0;i <= separatedInput.length;i++){
-			if(Item.isItem(separatedInput[i]))
+		// we can probably just have a message like (verb + " the what?") or something. or do it case-by-case for each verb.
+		for(int i = 0;i < separatedInput.length;i++){
+			System.out.println("DEBUG: new for-loop iteration. i = " + i);
+			if(Item.isItem(separatedInput[i])){ // throws out-of-bounds w/ a 1 or a 2 when the for-loop uses "i <= seperatedInput.length"
 				items[i] = Item.getItem(separatedInput[i]);
+				System.out.println("DEBUG: one-word Item, i = " + i);
+			}
 			else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
 				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
 				i++;
 				items[i] = null; // when it finds a 2-word item it makes the next items element null and it then moves past it
-			}else if(Exit.isExit(separatedInput[i]))
+				System.out.println("DEBUG: two-word Item, i = " + i);
+			}
+			else if(Exit.isExit(separatedInput[i])){
 				exits[i] = Exit.getExit(separatedInput[i]);
+				System.out.println("DEBUG: one-word Exit, i = " + i);
+			}
 			else if(separatedInput.length < i && Exit.isExit(separatedInput[i],separatedInput[i + 1])){
 				exits[i] = Exit.getExit(separatedInput[i], separatedInput[i + 1]);
 				i++;
 				items[i] = null;
-			}else
+				System.out.println("DEBUG: two-word Exit, i = " + i);
+			}
+			else{
 				verbStrings[i] = separatedInput[i];
+				System.out.println("DEBUG: verb, i = " + i);
+			}
 		}	
 		Verb.findAndExecuteAction(items, verbStrings, exits);
 	}
