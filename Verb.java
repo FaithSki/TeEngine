@@ -8,7 +8,10 @@ public class Verb {
 		allVerbs.add(this); //I'm hoping that the constructor extends to every verb, then we dont have to worry about manually adding them, whenever the instance of it is made then it will automatically be added
 	}
 	
-	public static void executeAction(Item[] items, String[] verbStrings, Exit[] exits){
+	public static void findAndExecuteAction(Item[] items, String[] verbStrings, Exit[] exits){
+		System.out.println(items[0]);
+		System.out.println(verbStrings[0]);
+		System.out.println(exits[0]);
 		//for(int i = 0;i <= items.length;i++)
 	}
 	
@@ -43,3 +46,19 @@ public class Verb {
 			System.out.println("You can't see anything like that.");
 		}
 	}
+	
+	public static class help extends Verb {
+		public String name = "help", format[] = {"help"};
+		
+		public void action() {
+			System.out.println("This is a text-based adventure, inspired by Infocom interactive fiction games.");
+			System.out.println("You may perform actions by inputting verbs, or verbs followed by nouns.");
+			System.out.println("For example; 'look', 'examine box', 'take key', etc.");
+			System.out.println("Additionally, you may navigate between rooms using cardinal directions.");
+			System.out.println("'North', or simply 'n', can be inputted to travel through an exit to the north.");
+			System.out.println();
+			System.out.println("Have fun!");
+			System.out.println();
+			}
+	}
+}
