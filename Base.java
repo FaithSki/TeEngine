@@ -1,13 +1,11 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
 public class Base {
-	/*
-	 *I feel that if we're going to have a game engine then we should have the engine, that interacts with another class containing the actual content of our game(items, rooms, verbs) 
-	 */
 	public static boolean itsHappening = true;
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
-	public static String[] itemName = new String[10];
+	public static String[] itemName = new String[10]; //what is this
 	public static String[] exitName = new String[10];
 
 	public Item bed;
@@ -16,16 +14,6 @@ public class Base {
 	public Item blank;
 
 	public Room startApartment;
-	/*
-	oh my gosh golly I didnt realize that the 5/17 due date was for seniors, ours is due on the 24th and we have a whole extra week than what I thought -_-
-	Hey look at me
-	If you ever want multi-word items/exits or whatever it will be hard, so if you cant find a way around it then we can make special cases in Verb
-	we could try having an array for multi word items/exits like {"cardboard","box"} or {"brown","door"}
-			We should have a "game" class
-			runGame will take an instance of that class in a parameter (or an extension of it) with all items, verbs, rooms, etc.
-			it will stay in a variable so that it can be accessed for later use
-			the game loop shouldn't have to be that complicated, It will output a starting sequence(if it has one) then ill evaluate the room then call checkInput with your input, the verbs will probably direct most of the action
-	 */
 
 	public static void resetRoomArrayLists(){
 		exits = new ArrayList<Exit>();
@@ -33,7 +21,6 @@ public class Base {
 	}
 
 	public static void runGame(){
-		
 		// sorry for ditching the Game class, but I can't figure out how to fix the null pointer exception. this breaks the entire game, so, unless you can
 		// fix that, I'm just plopping the object construction here. The Game class is unchanged, so we can re-implement it whenever.
 
@@ -66,7 +53,7 @@ public class Base {
 		
 		System.out.println("DEBUG: Checking allItems");
 		for(Item currentItem : Item.allItems){
-			System.out.println("DEBUG: " + currentItem.itemName[0]);
+			System.out.println("DEBUG: " + currentItem.itemName());
 		}
 		// is allItems supposed to be returning stuff like "[Ljava.lang.String;@1db9742"?
 		// TODO: itemName is in an array now, when you try to output just an array into the console it gives the reference to it and not the contents of it
@@ -109,9 +96,10 @@ public class Base {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("You just woke up in an unfamiliar apartment in a bed that isn't yours, with no clue how you got here or how to leave.");
-		System.out.println("Seems that it's up to you to find your way out. Type 'help' for information on how to play.  You can hear rain outside.");
+		System.out.println("Seems that it's up to you to find your way out. Type \"help\" for information on how to play.  You can hear rain outside.");
 		System.out.println();
 		PlayerInfo.playerRoom = startApartment;
+		//yo dude more spaces in lines helps right now
 		while (itsHappening = true){
 			System.out.println(PlayerInfo.playerRoom.roomName()); 
 			if (PlayerInfo.playerRoom.visited() == false){
@@ -128,10 +116,7 @@ public class Base {
 			String input = sc.nextLine();
 			PlayerInfo.playerRoom.visited = true;
 			System.out.println();
-			// at this point, we need to be able to detect a noun & a verb in the input. common verbs will be easy; "take" will just add a pickupable item
-			// to an inventory arraylist; "drop" will add the item to the playerRoom's item arraylist; examine will print the itemdescription. I don't know
-			// how we're going to handle the logic for unique interactions, like "use fork with spaghetti" or "screw in lightbulb."
-			// "use <Item1> with <Item2>" will have to be a special case, and "screw in" can be a Verb associated with a lightbulb
+			
 			//try{
 				checkInput(input);
 			//}
@@ -143,28 +128,6 @@ public class Base {
 	}	
 
 	private static void checkInput(String input){
-		/*
-		 * What I was saying to do with this method
-		 * 
-		 * have arrays of strings
-		 * 
-		 * String[] format = {"use","(Item)","with","(Item)"};
-		 * String[] separatedInput = {"use","memes","with","sauce"};
-		 * 
-		 * It will be easy to handle in this manner
-		 * but will the engine handle
-		 *
-		 *
-		 * ok my idea is that (this sucks if you want to have multi-word items)
-		 * make 3 arrays
-		 * Item[] inputItem = {null,meme,null,sauce};
-		 * String[] inputVerb = {"use","(Item)","with","(Item)"}; any items or exits found in the separated input will be put as "(Item)" or "(Exit)"
-		 * String[] inputExit = you get it by nown like inputItem
-		 * 
-		 * a method in the verb class will match input verb with the format, and then it will look for items in the same space 
-		 * once it finds the verb it will pass the action the required items and/or exits or nothing(maybe have to be null?), in order
-		 */
-		
 		String[] separatedInput = input.split(" ");
 		Item[] items = new Item[separatedInput.length];
 		String[] verbStrings = new String[separatedInput.length];
@@ -214,7 +177,5 @@ public class Base {
 		//Scanner input = new Scanner(System.in);
 		runGame();
 		//checkInput(input.nextLine());
-		//String[] balla = new String[2];
-		//System.out.println(balla[1]);
 	}
 }
