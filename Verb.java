@@ -2,18 +2,26 @@ import java.util.ArrayList;
 import java.util.Arrays;
 public class Verb {
 	public String name;
-	public String format;
+	public String[] format;
 	public static ArrayList<Verb> allVerbs = new ArrayList<Verb>();
 	
 	Verb(){
-		allVerbs.add(this); //I'm hoping that the constructor extends to every verb, then we dont have to worry about manually adding them, whenever the instance of it is made then it will automatically be added
+		allVerbs.add(this);
 	}
 	
 	public static void findAndExecuteAction(Item[] items, String[] verbStrings){
+		System.out.println("DEBUG: finding and executing actions");
 		System.out.println(items[0]);
 		System.out.println(verbStrings[0]);
-		for(Verb toExecute : allVerbs)
-			if(Arrays.deepEquals(toExecute.format, verbStrings))
+		for(Verb toExecute : allVerbs){
+			if(Arrays.deepEquals(toExecute.format, verbStrings)){
+				System.out.println("yeet");
+			}
+			else{
+				System.out.println("you goofed");
+			}
+		}
+		
 				// i still have to look into this method
 	}
 	
@@ -31,7 +39,11 @@ public class Verb {
 	}
 	
 	public static class look extends Verb {
-		public static String name = "look", format[] = {"look"};
+		look(){
+			allVerbs.add(this);
+			System.out.println("DEBUG: Constructed Look");
+		}
+		public static String name = "look", format[] = {null,"look"};
 		
 		public void action(Item[] items, String[] verbStrings){
 			System.out.println(PlayerInfo.playerRoom.roomDesc);
@@ -50,7 +62,7 @@ public class Verb {
 	}
 	
 	public static class north extends Verb {
-		public String name = "north", format[] = {"north"};
+		public String name = "north", format[] = {null,"north"};
 		
 		public void action(Item[] items, String[] verbStrings) {
 			
@@ -59,7 +71,7 @@ public class Verb {
 	}
 	
 	public static class help extends Verb {
-		public String name = "help", format[] = {"help"};
+		public String name = "help", format[] = {null,"help"};
 		
 		public void action(Item[] items, String[] verbStrings) {
 			System.out.println("This is a text-based adventure, inspired by Infocom interactive fiction games.");
