@@ -7,8 +7,8 @@ public class Base {
 	public static boolean itsHappening = true;
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
-	public static String[] itemNames = new String[10];
-	public static String[] exitNames = new String[10];
+	public static String[] itemName = new String[10];
+	public static String[] exitName = new String[10];
 
 	public Item bed;
 	public Item window;
@@ -31,14 +31,6 @@ public class Base {
 		exits = new ArrayList<Exit>();
 		items = new ArrayList<Item>();
 	}
-	public static void resetStringArrays(){
-		for(int count = 0; count < itemNames.length; count++){
-			itemNames[count] = null;
-		}
-		for(int count = 0; count < exitNames.length; count++){
-			exitNames[count] = null;
-		}
-	}
 
 	public static void runGame(){
 		
@@ -57,49 +49,62 @@ public class Base {
 		 * Possible Actions (String array)
 		 * Cantpickupmessage (String) 
 		 */
-		resetStringArrays();
 		//this I think should be in an extension of the verb class
 		Verb[] bedActions = {null};
-		String[] bedNames = {"Bed"}; // fyi this is not multiple names, this is for multiple words in an item like {"cardboard","box"}
-		itemNames = bedNames; // whyyyyyyy dont you just put in bedNames, also its a name not names
-		Item bed = new Item(itemNames,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
+		String[] bedName = {"Bed"};
+		Item bed = new Item(bedName,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
 		System.out.println("DEBUG: Constructed Bed");
-		resetStringArrays();
 		Verb[] windowActions = {null};
-		String[] windowNames = {"Window"};
-		itemNames = windowNames;
-		Item window = new Item(itemNames,"The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with blue lights from thousands of lit windows and street lights. It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.");
+		String[] windowName = {"Window"};
+		Item window = new Item(windowName,"The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with blue lights from thousands of lit windows and street lights. It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.");
 		System.out.println("DEBUG: Constructed Window");
-		resetStringArrays();
 		Verb[] televisionActions = {null};
-		String[] tvNames = {"TV"};
-		itemNames = tvNames;
-		Item television = new Item(itemNames,"An old beat-up trideo television set, packed into a neat box with a screen and a lens. The 3D projector’s busted, but the old-school flatscreen looks fine.",false,true,false,true,televisionActions,"It's a bit too heavy to just lug it around.");
+		String[] tvName = {"TV"};
+		Item television = new Item(tvName,"An old beat-up trideo television set, packed into a neat box with a screen and a lens. The 3D projector’s busted, but the old-school flatscreen looks fine.",false,true,false,true,televisionActions,"It's a bit too heavy to just lug it around.");
 		System.out.println("DEBUG: Constructed TV");
 		Verb[] generalActions = {null};//take maybe should be on the item side and not the "general actions" side
 		
 		System.out.println("DEBUG: Checking allItems");
 		for(Item currentItem : Item.allItems){
-			System.out.println("DEBUG: " + currentItem.itemName);
+			System.out.println("DEBUG: " + currentItem.itemName[0]);
 		}
 		// is allItems supposed to be returning stuff like "[Ljava.lang.String;@1db9742"?
 		// TODO: itemName is in an array now, when you try to output just an array into the console it gives the reference to it and not the contents of it
 		// I changed itemName() to combine the 2 words in a single string
-		resetStringArrays();
-		Item blank = new Item(itemNames,"",false,false,false,false,generalActions,"");
+		Item blank = new Item(null,"",false,false,false,false,generalActions,"");
 		items.add(blank);
+		
+		/*Exit constructor takes, in this order:
+		 * Room 1 (Room)
+		 * Room 2 (Room)
+		 * Name in Room 1 (String)
+		 * Name in Room 2 (String)
+		 * Description of Exiting Room 1 (String)
+		 * Description of Exiting Room 2 (String)
+		 * Locked (Boolean)
+		 * Locked Text (String)
+		 */
+		String[] apartmentDoor1Room1 = {"west","w"};String[] apartmentDoor1Room2 = {"east","e"};
+		Exit apartmentDoor1 = new Exit(apartmentDoor1Room1,apartmentDoor1Room2,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond...","Turning the stainless-steel handle, you re-enter the apartment you awoke in...",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
+		// apartmentDoor1 leads between startApartment and apartmentHallway
+		
 		/*Room constructor takes, in this order: 
 		 * Name (String)
 		 * Description (String)
 		 * Short Description (String)
-		 * Exits (ArrayList)
+		 * North Exit (Exit)
+		 * South Exit (Exit)
+		 * East Exit (Exit)
+		 * West Exit (Exit
 		 * Items (ArrayList)
 		 */
 		items.add(bed);
 		items.add(window);
 		items.add(television); // yo what is this u gotta separate your lines "items.add(bed);items.add(window);items.add(television);"
+		Room startApartment = new Room("APARTMENT","You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed. The ceiling light is off. You can hear rain outside.",null,null,null,apartmentDoor1,items);
 		
-		Room startApartment = new Room("APARTMENT","You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed. The ceiling light is off. You can hear rain outside.",items,exits);
+		
+		
 		// End constructing all game objects
 
 		Scanner sc = new Scanner(System.in);
@@ -109,10 +114,6 @@ public class Base {
 		PlayerInfo.playerRoom = startApartment;
 		while (itsHappening = true){
 			System.out.println(PlayerInfo.playerRoom.roomName()); 
-			// this keeps hitting a null pointer exception (!!!). we might need to just totally revert all of the Game class stuff, idkkkk.
-			// I moved all of the Game constructor stuff into a method under Base and then i thought that i knew how to fix the null pointer
-			// so i reverted all of my changes and whooops my fix didn't work.
-			// i'm going to diiiieeee
 			if (PlayerInfo.playerRoom.visited() == false){
 				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
 				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
@@ -206,14 +207,14 @@ public class Base {
 				System.out.println("DEBUG: verb, i = " + i);
 			}
 		}	
-		Verb.findAndExecuteAction(items, verbStrings, exits);
+		Verb.findAndExecuteAction(items, verbStrings);
 	}
 
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
-		//runGame();
+		runGame();
 		//checkInput(input.nextLine());
-		String[] balla = new String[2];
-		System.out.println(balla[1]);
+		//String[] balla = new String[2];
+		//System.out.println(balla[1]);
 	}
 }
