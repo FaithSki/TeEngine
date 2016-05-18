@@ -34,9 +34,14 @@ public class Item {
 	}
 
 	public static boolean isItem(String word){
-		for(Item currentItem : allItems)
-			if(word.equalsIgnoreCase(currentItem.itemName[0]))
-				return true;
+		for(Item currentItem : allItems){
+			try{
+				if(word.equalsIgnoreCase(currentItem.itemName[0]))
+					return true;
+			}catch (Exception a){
+				return false;
+			}
+		}
 		return false;
 	}
 
