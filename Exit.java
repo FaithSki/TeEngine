@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 public class Exit {
 	
-	Room room1; // One of the two rooms that the Exit leads between; this room should be encountered before room2
-	Room room2; // One of the two rooms that the Exit leads between; this room should be encountered after room1
+	//Room room1; // One of the two rooms that the Exit leads between; this room should be encountered before room2
+	//Room room2; // One of the two rooms that the Exit leads between; this room should be encountered after room1
 	// [room1] <---> (exit) <---> [room2]
 	// in room 1, exit is called "east" (room1Names = "east, e")
 	// in room 2, exit is called "west" (room2Names = "west, w")
@@ -13,24 +13,28 @@ public class Exit {
 	String exitRoom1; // The text for when you exit room 1 and enter room 2
 	String exitRoom2; // The text for when you exit room 2 and enter room 1
 	boolean locked; // Can the Player travel through the Exit?
+	String lockedText; // What's printed when the Player tries to travel through the locked Exit
 	public static ArrayList<Exit> allExits = new ArrayList<Exit>();
 	
-	Exit(Room inputRoom1, Room inputRoom2, String[] inputRoom1Name, String[] inputRoom2Name, boolean inputLocked){
-		room1 = inputRoom1;
- 		room2 = inputRoom2;
+	Exit(String[] inputRoom1Name, String[] inputRoom2Name, String inputExitRoom1, String inputExitRoom2, boolean inputLocked, String inputLockedText){
+		//room1 = inputRoom1;
+ 		//room2 = inputRoom2;
  		room1Name = inputRoom1Name;
  		room2Name = inputRoom2Name;
+ 		exitRoom1 = inputExitRoom1;
+ 		exitRoom2 = inputExitRoom2;
  		locked = inputLocked;
+ 		lockedText = inputLockedText;
  		allExits.add(this);
  	}
 	
-	public Room room1(){
+	/*public Room room1(){
 		return room1;
 	}
 	
 	public Room room2(){
 		return room2;
-	}
+	}*/
 	
 	public String room1Name(int index){
 		return room1Name[index];
