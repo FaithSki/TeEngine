@@ -172,6 +172,20 @@ public class Base {
 		}	
 		Verb.findAndExecuteAction(items, verbStrings);
 	}
+	
+	private static void printMultiLine (String inputStatement){
+		String newLine;
+		boolean gogogo = true;
+		if (inputStatement.length() > 110){
+			while (gogogo == true){
+				newLine = inputStatement.substring(109, inputStatement.length());
+				if(newLine.substring(0, 1).equals("")){
+					gogogo = false;
+				}
+			}
+			
+		}
+	}
 
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
