@@ -113,12 +113,12 @@ public class Base {
 			}
 			System.out.print(">_ ");
 
-			String input = sc.nextLine();
+			
 			PlayerInfo.playerRoom.visited = true;
 			System.out.println();
 			
 			//try{
-				checkInput(input);
+				checkInput(sc.nextLine());
 			//}
 			//catch (Exception a){
 				//System.out.println("That doesn't quite make sense.");
@@ -175,8 +175,15 @@ public class Base {
 	
 	private static void printMultiLine(String inputStatement){
 		// omggg this should be so easy but i keep messing up and having to re-write it
+		// we have to think about it if we don't want it to do somethi
+		// stupid and work like it do
+		// now
+		
+		/*
 		String newLine;
+		int lineIndex;
 		boolean gogogo = true;
+		
 		if (inputStatement.length() > 110){
 			newLine = inputStatement.substring((inputStatement.length() - 109), inputStatement.length());
 			inputStatement = inputStatement.substring(0, inputStatement.length() - 110);
@@ -197,6 +204,15 @@ public class Base {
 		else{
 			System.out.println(inputStatement);
 		}
+		*/
+		System.out.println("length:" + inputStatement.length());
+		
+		if (inputStatement.length() > 110 && inputStatement.indexOf(" ") >= 110){
+			System.out.println(inputStatement.substring(109,inputStatement.indexOf(" ")));
+			
+			printMultiLine(inputStatement.substring(inputStatement.substring(inputStatement.indexOf(" "))));//dont worry ill get it to work
+		}else
+			System.out.println(inputStatement);
 	}
 
 	public static void main (String str[]) {
