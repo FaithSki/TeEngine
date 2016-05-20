@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.awt.*;
+import javax.swing.*;
 
 public class Base {
 	public static boolean itsHappening = true;
@@ -179,7 +181,7 @@ public class Base {
 		// stupid and work like it do
 		// now
 		
-		/*
+		//there has to be a simpler solution to this, but idk im being stupid
 		String newLine;
 		int lineIndex;
 		boolean gogogo = true;
@@ -204,20 +206,12 @@ public class Base {
 		else{
 			System.out.println(inputStatement);
 		}
-		*/
-		System.out.println("length:" + inputStatement.length());
-		
-		if (inputStatement.length() > 110 && inputStatement.indexOf(" ") >= 110){
-			System.out.println(inputStatement.substring(109,inputStatement.indexOf(" ")));
-			
-			printMultiLine(inputStatement.substring(inputStatement.substring(inputStatement.indexOf(" "))));//dont worry ill get it to work
-		}else
-			System.out.println(inputStatement);
 	}
 
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
 		//runGame();
+		//JFrame wat = new JFrame("wat"); help wat am i dong
 		printMultiLine("You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.");
 		//checkInput(input.nextLine());
 	}
