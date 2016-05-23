@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.*;
 import javax.swing.*;
+import java.util.Arrays;
 
 public class Base {
 	public static boolean itsHappening = true;
@@ -134,7 +135,7 @@ public class Base {
 		Item[] items = new Item[separatedInput.length];
 		String[] verbStrings = new String[separatedInput.length];
 		Exit[] exits = new Exit[separatedInput.length];
-
+		Character[] characters = new Character[separatedInput.length];
 		
 		 // it will tell you that your stuff dont work or you cant see it in the verb method
 		 
@@ -146,33 +147,23 @@ public class Base {
 				items[i] = Item.getItem(separatedInput[i]);
 				verbStrings[i] = null;
 				System.out.println("DEBUG: one-word Item, i = " + i);
-			}
-			else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
+			}else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
 				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
 				verbStrings[i] = null;
 				i++;
 				items[i] = null; // when it finds a 2-word item it makes the next items element null and it then moves past it
 				System.out.println("DEBUG: two-word Item, i = " + i);
-			}/*
-			if we're just going to say "north" "s" then we shouldnt need this, but i'll keep it if we want secret or unconventional exits
-			else if(Exit.isExit(separatedInput[i])){
-				exits[i] = Exit.getExit(separatedInput[i]);
+			}else if(Character.isCharacter(separatedInput[i])){
+				characters[i] = Character.getCharacter(separatedInput[i]);
 				verbStrings[i] = null;
-				System.out.println("DEBUG: one-word Exit, i = " + i);
+				System.out.println("DEBUG: character, i = " + i);
 			}
-			else if(separatedInput.length < i && Exit.isExit(separatedInput[i],separatedInput[i + 1])){
-				exits[i] = Exit.getExit(separatedInput[i], separatedInput[i + 1]);
-				verbStrings[i] = null;
-				i++;
-				items[i] = null;
-				System.out.println("DEBUG: two-word Exit, i = " + i);
-			}*/
 			else{
 				verbStrings[i] = separatedInput[i];
 				System.out.println("DEBUG: verb, i = " + i);
 			}
 		}	
-		Verb.findAndExecuteAction(items, verbStrings);
+		Verb.findAndExecuteAction(items, characters, verbStrings);
 	}
 	
 	/*private static void printMultiLine(String inputStatement){
@@ -214,5 +205,8 @@ public class Base {
 		//JFrame wat = new JFrame("wat"); help wat am i dong
 		//printMultiLine("You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.");
 		//checkInput(input.nextLine());
+		//String[] bla = {"bla","bla"};
+		//String[] blabla = {"bla","bla"};
+		//System.out.print(Arrays.deepEquals(bla, blabla)); // dis works boi
 	}
 }
