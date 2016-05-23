@@ -27,6 +27,8 @@ public class Base {
 		// fix that, I'm just plopping the object construction here. The Game class is unchanged, so we can re-implement it whenever.
 
 		// Start constructing all game objects 
+		
+		Verb.take take1 = new Verb.take();
 
 		/*Item constructor takes, in this order: 
 		 * Name (String)
@@ -45,7 +47,7 @@ public class Base {
 		System.out.println("DEBUG: Constructed Bed");
 		Verb[] windowActions = {null};
 		String[] windowName = {"Window"};
-		Item window = new Item(windowName,"The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with blue lights from thousands of lit windows and street lights. It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.");
+		Item window = new Item(windowName,"The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with\n blue lights from thousands of lit windows and street lights. Off in the distance, the skyscrapers seem to stretch miles into the sky.\n It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.");
 		System.out.println("DEBUG: Constructed Window");
 		Verb[] televisionActions = {null};
 		String[] tvName = {"TV"};
@@ -74,7 +76,7 @@ public class Base {
 		 * Locked Text (String)
 		 */
 		String[] apartmentDoor1Room1 = {"west","w"};String[] apartmentDoor1Room2 = {"east","e"};
-		Exit apartmentDoor1 = new Exit(apartmentDoor1Room1,apartmentDoor1Room2,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond...","Turning the stainless-steel handle, you re-enter the apartment you awoke in...",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
+		Exit apartmentDoor1 = new Exit(apartmentDoor1Room1,apartmentDoor1Room2,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond..","Turning the stainless-steel handle, you re-enter the apartment you awoke in..",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
 		// apartmentDoor1 leads between startApartment and apartmentHallway
 		
 		/*Room constructor takes, in this order: 
@@ -90,8 +92,10 @@ public class Base {
 		items.add(bed);
 		items.add(window);
 		items.add(television); // yo what is this u gotta separate your lines "items.add(bed);items.add(window);items.add(television);"
-		Room startApartment = new Room("APARTMENT","You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed. The ceiling light is off. You can hear rain outside.",null,null,null,apartmentDoor1,items);
-		
+		Room startApartment = new Room("APARTMENT","You've awoken in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been\npushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the\nlight bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless,\naside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed.\nThe ceiling light is off. You can hear rain outside.",null,null,null,apartmentDoor1,items);
+		resetRoomArrayLists();
+		items.add(window);
+		Room commonRoom = new Room("COMMON ROOM","This room is long; more of a hallway with furniture, you figure. Doors line the eastern wall, at least a dozen of them, all identical to the one leading into\n \"your\" apartment, aside from their lack of any sort of handle. Aside from the doors, this room features clusters of old mis-matched plastic and metal chairs, each one\ncushioned and surrounding a stainless steel table. A small kitchenette sits on the western wall, along with a rather nondescript door. To the north lies a curtained\nwindow. You can hear rain outside.","A long common room, dotted with decaying furniture, apartment doors, and a kitchenette. The exit lies to the west. To the north, a window. The apartment you awoke\nin is to the east. You can hear rain outside.",null,null,apartmentDoor1,null,items);
 		
 		
 		// End constructing all game objects
@@ -114,11 +118,7 @@ public class Base {
 				System.out.println(PlayerInfo.playerRoom.roomShortDesc());
 			}
 			System.out.print(">_ ");
-
-			
 			PlayerInfo.playerRoom.visited = true;
-			System.out.println();
-			
 			//try{
 				checkInput(sc.nextLine());
 			//}
@@ -175,7 +175,7 @@ public class Base {
 		Verb.findAndExecuteAction(items, verbStrings);
 	}
 	
-	private static void printMultiLine(String inputStatement){
+	/*private static void printMultiLine(String inputStatement){
 		// omggg this should be so easy but i keep messing up and having to re-write it
 		// we have to think about it if we don't want it to do somethi
 		// stupid and work like it do
@@ -206,13 +206,13 @@ public class Base {
 		else{
 			System.out.println(inputStatement);
 		}
-	}
+	}*/
 
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
-		//runGame();
+		runGame();
 		//JFrame wat = new JFrame("wat"); help wat am i dong
-		printMultiLine("You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.");
+		//printMultiLine("You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.");
 		//checkInput(input.nextLine());
 	}
 }
