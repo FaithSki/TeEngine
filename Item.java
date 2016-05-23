@@ -35,7 +35,7 @@ public class Item {
 
 	public static boolean isItem(String word){
 		for(Item currentItem : allItems){
-			try{
+			try{//why do you have this try/catch here? seems useless too meeee
 				if(word.equalsIgnoreCase(currentItem.itemName[0]))
 					return true;
 			}catch (Exception a){
