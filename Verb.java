@@ -11,9 +11,12 @@ public class Verb {
 	
 	public static void findAndExecuteAction(Item[] items, String[] verbStrings){
 		System.out.println("DEBUG: finding and executing actions");
-		System.out.println(items[0]);
 		System.out.println(verbStrings[0]);
+		//System.out.println(items[1].itemName());
 		for(Verb toExecute : allVerbs){
+			// This doesn't appear to be an issue with deepEquals. toExecute.format returns null everytime. I don't trust these ( : ) for-loops, d00d.
+			// I don't know hoooow these work so idk what's wrong with iiiiit.
+			System.out.println(toExecute);
 			if(Arrays.deepEquals(toExecute.format, verbStrings)){
 				System.out.println("yeet");
 				toExecute.action(items); // some weird stuff happening here, not sure what exactly to do
@@ -25,9 +28,11 @@ public class Verb {
 				// i still have to look into this method
 	}
 	
+	private void action(Item[] items) {
+	}
+
 	public static class take extends Verb {
 		public String name = "take", format[] = {"take",null}; // a central method would replace any (Item)s and do something with it to make it work, something would look for items in those (Item) slots
-		
 		public static void action(Item[] items) {
 			if(items[1].location == PlayerInfo.playerRoom && items[1].visible && items[1].pickupAble){
 				PlayerInfo.inventory.add(items[1]);
@@ -39,10 +44,6 @@ public class Verb {
 	}
 	
 	public static class look extends Verb {
-		look(){
-			allVerbs.add(this);
-			System.out.println("DEBUG: Constructed Look");
-		}
 		public static String name = "look", format[] = {null,"look"};
 		
 		public static void action(Item[] items){
