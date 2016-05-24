@@ -5,8 +5,6 @@ public class Base {
 	public static boolean itsHappening = true;
 	public static ArrayList<Exit> exits = new ArrayList<Exit>();
 	public static ArrayList<Item> items = new ArrayList<Item>();
-	public static String[] itemName = new String[10]; //what is this
-	public static String[] exitName = new String[10];
 
 	public Item bed;
 	public Item window;
@@ -23,38 +21,69 @@ public class Base {
 	public static void runGame(){
 		// Start constructing all game objects
 		
-		//im not sure if the constructor was working properly before so i made a new one
 		new Verb.look("look",new String[]{"look"});//you can create an array inline for methods, thanks stackoverflow
 		new Verb.take("take", new String[]{"take",null});
-		//TODO: I changed the item constructor
+		new Verb.examine("examine",new String[]{"examine",null});
+		
+		/*Item constructor takes, in this order: 
+		 * Name (String)
+		 * Description (String)
+		 * Pickupable (boolean)
+		 * Usable (boolean)
+		 * Dropable (boolean)
+		 * Visible (boolean)
+		 * Possible Actions (String array)
+		 * "Can't Pick Up" Message (String) 
+		 * Picture Title (String)
+		 * Picture Location (String)
+		 */
 		Verb[] bedActions = {null};
 		String[] bedName = {"Bed"};
-		Item bed = new Item(bedName,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
-		System.out.println("DEBUG: Constructed Bed");
+		Item bed = new Item(bedName,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.",null,null);
 		Verb[] windowActions = {null};
 		String[] windowName = {"Window"};
-		Item window = new Item(windowName,"The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with\n blue lights from thousands of lit windows and street lights. Off in the distance, the skyscrapers seem to stretch miles into the sky.\n It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.");
-		System.out.println("DEBUG: Constructed Window");
+		Item window = new Item(windowName,"The glass is fogged over, but you can just barely see outside. A sprawling skyline of densely-packed buildings is visible, each block dotted with\n blue lights from thousands of lit windows and street lights. Off in the distance, the skyscrapers seem to stretch miles into the sky.\n It’s raining. You can see a flash of lightning in the distance.",false,true,false,true,windowActions,"It's firmly installed into the wall.",null,null);
 		Verb[] televisionActions = {null};
 		String[] tvName = {"TV"};
-		Item television = new Item(tvName,"An old beat-up trideo television set, packed into a neat box with a screen and a lens. The 3D projector’s busted, but the old-school flatscreen looks fine.",false,true,false,true,televisionActions,"It's a bit too heavy to just lug it around.");
-		System.out.println("DEBUG: Constructed TV");
-		Verb[] generalActions = {null};//take maybe should be on the item side and not the "general actions" side
-		
-		System.out.println("DEBUG: Checking allItems");
-		for(Item currentItem : Item.allItems){
-			System.out.println("DEBUG: " + currentItem.itemName());
-		}
-		
-		Item blank = new Item(null,"",false,false,false,false,generalActions,"");
+		Item television = new Item(tvName,"An old beat-up trideo television set, packed into a neat box with a screen and a lens. The 3D projector’s busted, but the old-school flatscreen looks fine.",false,true,false,true,televisionActions,"It's a bit too heavy to just lug it around.",null,null);
+		Verb[] keyCardActions = {null};
+		String[] keyCardName = {"Key","Card"};
+		Item keyCard = new Item(keyCardName,"A paper-thin slab of white plastic, featureless aside from a small, rectangular magnetic strip.",true,true,true,false,keyCardActions,"You goofed.",null,null);
+		Verb[] presentActions = {null};
+		String[] presentName = {"Box"};
+		Item present = new Item(presentName,"A plain cardboard box, featureless aside from the little plastic blue bow taped on to the top. A note is taped to the side.",true,false,false,true,presentActions,"You don't forsee much of a need for a cardboard box. But what's inside?",null,null);
+		Verb[] noteActions = {null};
+		String[] noteName = {"Note"};
+		Item note = new Item(noteName,null,false,false,false,true,keyCardActions,"It's stuck to the box.. though, you can't see anything adhering it to the cardboard.",null,null);
+		// The note should open a graphic. Just put a weird, vague, cryptic message on it, like it's from a mysterious benefactor/creepy-weirdo. The box will contain the keycard.
+		Verb[] generalActions = {null};
+		Item blank = new Item(null,"",false,false,false,false,generalActions,"",null,null);
 		items.add(blank);
 		
-		
+		/*Exit constructor takes, in this order:
+		 * Room 1 (Room)
+		 * Room 2 (Room)
+		 * Name in Room 1 (String)
+		 * Name in Room 2 (String)
+		 * Description of Exiting Room 1 (String)
+		 * Description of Exiting Room 2 (String)
+		 * Locked (Boolean)
+		 * Locked Text (String)
+		 */
 		String[] apartmentDoor1Room1 = {"west","w"};String[] apartmentDoor1Room2 = {"east","e"};
 		Exit apartmentDoor1 = new Exit(apartmentDoor1Room1,apartmentDoor1Room2,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond..","Turning the stainless-steel handle, you re-enter the apartment you awoke in..",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
 		// apartmentDoor1 leads between startApartment and apartmentHallway
 		
-		
+		/*Room constructor takes, in this order: 
+		 * Name (String)
+		 * Description (String)
+		 * Short Description (String)
+		 * North Exit (Exit)
+		 * South Exit (Exit)
+		 * East Exit (Exit)
+		 * West Exit (Exit
+		 * Items (ArrayList)
+		 */
 		items.add(bed);
 		items.add(window);
 		items.add(television); // yo what is this u gotta separate your lines "items.add(bed);items.add(window);items.add(television);"
@@ -70,13 +99,9 @@ public class Base {
 		System.out.println("Seems that it's up to you to find your way out. Type \"help\" for information on how to play.  You can hear rain outside.");
 		System.out.println();
 		PlayerInfo.playerRoom = startApartment;
-		//yo dude more spaces in lines helps right now
 		while (itsHappening = true){
 			System.out.println(PlayerInfo.playerRoom.roomName()); 
 			if (PlayerInfo.playerRoom.visited() == false){
-				// visisted should stay true after the first visit, to prevent too much spam when you're trying to navigate your way across the "world."
-				// the full description should be able to be brought up again with a "look" verb, and maybe in the future we can have an option to
-				// choose whether you get shortdescriptions or the full description everytime (most infocom interactive fictions have something like that).
 				System.out.println(PlayerInfo.playerRoom.roomDesc());
 			}
 			else{
@@ -84,12 +109,12 @@ public class Base {
 			}
 			System.out.print(">_ ");
 			PlayerInfo.playerRoom.visited = true;
-			//try{
+			try{
 				checkInput(sc.nextLine());
-			//}
-			//catch (Exception a){
-				//System.out.println("That doesn't quite make sense.");
-			//}
+			}
+			catch (Exception a){
+				System.out.println("That doesn't quite make sense.");
+			}
 			System.out.println();
 		}
 	}	
@@ -100,11 +125,7 @@ public class Base {
 		String[] verbStrings = new String[separatedInput.length];
 		Exit[] exits = new Exit[separatedInput.length];
 		Character[] characters = new Character[separatedInput.length];
-		
-		 // it will tell you that your stuff dont work or you cant see it in the verb method
-		 
-		// the way it currently works now is that anything that is not a noun is passed to verb as something else, do you want it to be able to say "that is not an item"?
-		// we can probably just have a message like (verb + " the what?") or something. or do it case-by-case for each verb.
+	
 		for(int i = 0;i < separatedInput.length;i++){
 			//System.out.println("DEBUG: new for-loop iteration. i = " + i);
 			if(Item.isItem(separatedInput[i])){ // throws out-of-bounds w/ a 1 or a 2 when the for-loop uses "i <= seperatedInput.length"
@@ -160,7 +181,6 @@ public class Base {
 	}*/
 
 	public static void main (String str[]) {
-		//Scanner input = new Scanner(System.in);
-		//runGame();
+		runGame();
 	}
 }
