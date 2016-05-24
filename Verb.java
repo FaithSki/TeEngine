@@ -6,7 +6,9 @@ public class Verb {
 	public String[] format;
 	public static ArrayList<Verb> allVerbs = new ArrayList<Verb>();
 	
-	Verb(){
+	Verb(String inputName, String[] inputFormat){
+		name = inputName;
+		format = inputFormat;
 		allVerbs.add(this);
 	}
 	
@@ -17,17 +19,23 @@ public class Verb {
 		boolean flag = true;
 				
 		for(Verb toExecute : allVerbs){
-			if(Arrays.deepEquals(toExecute.format, verbStrings) && flag){ //dont worry i can fix this
+			System.out.println("DEBUG: Verb toExecute name: " + toExecute.name);
+			if(Arrays.deepEquals(toExecute.format, verbStrings)){ //dont worry i can fix this
 				System.out.println("yeet");
 				toExecute.action(items, characters);
-			}else
-					System.out.println("you goofed");
+			}else if(flag){
+				System.out.println("I can't do that.");
+			}
 		}
 	}
 	
-	private void action(Item[] items, Character[] characters) {} //this is a temporary crappy solution
+	public void action(Item[] items, Character[] characters){} //this is a crappy solution
 
 	public static class take extends Verb {
+		take(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
 		public String name = "take", format[] = {"take",null}; // a central method would replace any (Item)s and do something with it to make it work, something would look for items in those (Item) slots
 		
 		public void action(Item[] items, Character[] characters) {
@@ -41,11 +49,11 @@ public class Verb {
 	}
 	
 	public static class look extends Verb {
-		look(){
-			allVerbs.add(this);
-			System.out.println("DEBUG: Constructed Look");
+		look(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
 		}
-		public static String name = "look", format[] = {null,"look"};
+
+		public String name = "look", format[] = {null,"look"};
 		
 		public void action(Item[] items, Character[] characters){
 			System.out.println(PlayerInfo.playerRoom.roomDesc);
@@ -53,6 +61,10 @@ public class Verb {
 	}
 	
 	public static class examine extends Verb {
+		examine(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
 		public String name = "examine", format[] = {"examine",null};
 		
 		public void action(Item[] items, Character[] characters) {
@@ -66,6 +78,10 @@ public class Verb {
 	}
 	
 	public static class north extends Verb {
+		north(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
 		public String name = "north", format[] = {"north"};
 		
 		public void action(Item[] items, Character[] characters) {
@@ -74,6 +90,10 @@ public class Verb {
 	}
 	
 	public static class south extends Verb {
+		south(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
 		public String name = "south", format[] = {"south"};
 		
 		public void action(Item[] items, Character[] characters) {
@@ -82,6 +102,10 @@ public class Verb {
 	}
 	
 	public static class east extends Verb {
+		east(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
 		public String name = "east", format[] = {"east"};
 		
 		public void action(Item[] items, Character[] characters) {
@@ -90,6 +114,10 @@ public class Verb {
 	}
 	
 	public static class west extends Verb {
+		west(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
 		public String name = "west", format[] = {"west"};
 		
 		public void action(Item[] items, Character[] characters) {
@@ -98,6 +126,10 @@ public class Verb {
 	}
 	
 	public static class help extends Verb {
+		help(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
 		public String name = "help", format[] = {null,"help"};
 		
 		public void action(Item[] items) {
@@ -110,13 +142,5 @@ public class Verb {
 			System.out.println("Have fun!");
 			System.out.println();
 			}
-	}
-	
-	public static class test extends Verb {
-		public String name = "test", format[] = {"test"};
-		
-		public void action(Item[] items) {
-			System.out.println("test");
-		}
 	}
 }

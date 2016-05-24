@@ -10,7 +10,16 @@ public class Room {
 	Exit west;
 	ArrayList items; // Items placed in the room.
 	boolean visited = false; // Has the player been inside of the room before?
-	
+	/*Room constructor takes, in this order: 
+	 * Name (String)
+	 * Description (String)
+	 * Short Description (String)
+	 * North Exit (Exit)
+	 * South Exit (Exit)
+	 * East Exit (Exit)
+	 * West Exit (Exit
+	 * Items (ArrayList)
+	 */
 	Room(String inputName, String inputDesc, String inputShortDesc,Exit inputNorth, Exit inputSouth, Exit inputEast, Exit inputWest, ArrayList inputItems){
 		roomName = inputName;
 		roomDesc = inputDesc;

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class Character {
 	public static ArrayList<Character> allCharacters = new ArrayList<Character>();
 	public String name;

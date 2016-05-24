@@ -12,9 +12,20 @@ public class Item {
 	public String cantPickUpMessage;
 	public String cantDropMessage;
 	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
+	public String pictureTitle;
+	public String pictureLocation;//the location "src/Pics/whatever.jpg"
 	public static ArrayList<Item> allItems = new ArrayList<Item>();
-
-	Item(String[] inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, Verb inputPossibleActions[], String inputCantPickUp){
+	/*Item constructor takes, in this order: 
+	 * Name (String)
+	 * Description (String)
+	 * Pickupable (boolean)
+	 * Usable (boolean)
+	 * Dropable (boolean)
+	 * Visible (boolean)
+	 * Possible Actions (String array)
+	 * Cantpickupmessage (String) 
+	 */
+	Item(String[] inputName, String inputDescription, boolean inputPickupAble, boolean inputUseAble, boolean inputDropAble, boolean inputVisible, Verb inputPossibleActions[], String inputCantPickUp, String inputPictureTitle, String inputPictureLocation){
 		itemName = inputName;
 		itemDescription = inputDescription;
 		pickupAble = inputPickupAble;
@@ -23,6 +34,8 @@ public class Item {
 		visible = inputVisible;
 		possibleActions = inputPossibleActions;
 		cantPickUpMessage = inputCantPickUp;
+		pictureTitle = inputPictureTitle;
+		pictureLocation = inputPictureLocation;
 		allItems.add(this);
 	}
 

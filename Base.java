@@ -1,8 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.awt.*;
-import javax.swing.*;
-import java.util.Arrays;
 
 public class Base {
 	public static boolean itsHappening = true;
@@ -24,24 +21,12 @@ public class Base {
 	}
 
 	public static void runGame(){
-		// sorry for ditching the Game class, but I can't figure out how to fix the null pointer exception. this breaks the entire game, so, unless you can
-		// fix that, I'm just plopping the object construction here. The Game class is unchanged, so we can re-implement it whenever.
-
-		// Start constructing all game objects 
+		// Start constructing all game objects
 		
-		Verb.take take1 = new Verb.take();
-
-		/*Item constructor takes, in this order: 
-		 * Name (String)
-		 * Description (String)
-		 * Pickupable (boolean)
-		 * Usable (boolean)
-		 * Dropable (boolean)
-		 * Visible (boolean)
-		 * Possible Actions (String array)
-		 * Cantpickupmessage (String) 
-		 */
-		//this I think should be in an extension of the verb class
+		//im not sure if the constructor was working properly before so i made a new one
+		new Verb.look("look",new String[]{"look"});//you can create an array inline for methods, thanks stackoverflow
+		new Verb.take("take", new String[]{"take",null});
+		//TODO: I changed the item constructor
 		Verb[] bedActions = {null};
 		String[] bedName = {"Bed"};
 		Item bed = new Item(bedName,"Essentially just a mattress with a wrinkled, white sheet tossed atop it.",false,false,false,true,bedActions,"It's too heavy.");
@@ -60,36 +45,16 @@ public class Base {
 		for(Item currentItem : Item.allItems){
 			System.out.println("DEBUG: " + currentItem.itemName());
 		}
-		// is allItems supposed to be returning stuff like "[Ljava.lang.String;@1db9742"?
-		// TODO: itemName is in an array now, when you try to output just an array into the console it gives the reference to it and not the contents of it
-		// I changed itemName() to combine the 2 words in a single string
+		
 		Item blank = new Item(null,"",false,false,false,false,generalActions,"");
 		items.add(blank);
 		
-		/*Exit constructor takes, in this order:
-		 * Room 1 (Room)
-		 * Room 2 (Room)
-		 * Name in Room 1 (String)
-		 * Name in Room 2 (String)
-		 * Description of Exiting Room 1 (String)
-		 * Description of Exiting Room 2 (String)
-		 * Locked (Boolean)
-		 * Locked Text (String)
-		 */
+		
 		String[] apartmentDoor1Room1 = {"west","w"};String[] apartmentDoor1Room2 = {"east","e"};
 		Exit apartmentDoor1 = new Exit(apartmentDoor1Room1,apartmentDoor1Room2,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond..","Turning the stainless-steel handle, you re-enter the apartment you awoke in..",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
 		// apartmentDoor1 leads between startApartment and apartmentHallway
 		
-		/*Room constructor takes, in this order: 
-		 * Name (String)
-		 * Description (String)
-		 * Short Description (String)
-		 * North Exit (Exit)
-		 * South Exit (Exit)
-		 * East Exit (Exit)
-		 * West Exit (Exit
-		 * Items (ArrayList)
-		 */
+		
 		items.add(bed);
 		items.add(window);
 		items.add(television); // yo what is this u gotta separate your lines "items.add(bed);items.add(window);items.add(television);"
@@ -97,7 +62,6 @@ public class Base {
 		resetRoomArrayLists();
 		items.add(window);
 		Room commonRoom = new Room("COMMON ROOM","This room is long; more of a hallway with furniture, you figure. Doors line the eastern wall, at least a dozen of them, all identical to the one leading into\n \"your\" apartment, aside from their lack of any sort of handle. Aside from the doors, this room features clusters of old mis-matched plastic and metal chairs, each one\ncushioned and surrounding a stainless steel table. A small kitchenette sits on the western wall, along with a rather nondescript door. To the north lies a curtained\nwindow. You can hear rain outside.","A long common room, dotted with decaying furniture, apartment doors, and a kitchenette. The exit lies to the west. To the north, a window. The apartment you awoke\nin is to the east. You can hear rain outside.",null,null,apartmentDoor1,null,items);
-		
 		
 		// End constructing all game objects
 
@@ -142,35 +106,31 @@ public class Base {
 		// the way it currently works now is that anything that is not a noun is passed to verb as something else, do you want it to be able to say "that is not an item"?
 		// we can probably just have a message like (verb + " the what?") or something. or do it case-by-case for each verb.
 		for(int i = 0;i < separatedInput.length;i++){
-			System.out.println("DEBUG: new for-loop iteration. i = " + i);
+			//System.out.println("DEBUG: new for-loop iteration. i = " + i);
 			if(Item.isItem(separatedInput[i])){ // throws out-of-bounds w/ a 1 or a 2 when the for-loop uses "i <= seperatedInput.length"
 				items[i] = Item.getItem(separatedInput[i]);
 				verbStrings[i] = null;
-				System.out.println("DEBUG: one-word Item, i = " + i);
+				//System.out.println("DEBUG: one-word Item, i = " + i);
 			}else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
 				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
 				verbStrings[i] = null;
 				i++;
 				items[i] = null; // when it finds a 2-word item it makes the next items element null and it then moves past it
-				System.out.println("DEBUG: two-word Item, i = " + i);
+				//System.out.println("DEBUG: two-word Item, i = " + i);
 			}else if(Character.isCharacter(separatedInput[i])){
 				characters[i] = Character.getCharacter(separatedInput[i]);
 				verbStrings[i] = null;
-				System.out.println("DEBUG: character, i = " + i);
+				//System.out.println("DEBUG: character, i = " + i);
 			}
 			else{
 				verbStrings[i] = separatedInput[i];
-				System.out.println("DEBUG: verb, i = " + i);
+				//System.out.println("DEBUG: verb, i = " + i);
 			}
 		}	
 		Verb.findAndExecuteAction(items, characters, verbStrings);
 	}
 	
 	/*private static void printMultiLine(String inputStatement){
-		// omggg this should be so easy but i keep messing up and having to re-write it
-		// we have to think about it if we don't want it to do somethi
-		// stupid and work like it do
-		// now
 		
 		//there has to be a simpler solution to this, but idk im being stupid
 		String newLine;
@@ -201,12 +161,6 @@ public class Base {
 
 	public static void main (String str[]) {
 		//Scanner input = new Scanner(System.in);
-		runGame();
-		//JFrame wat = new JFrame("wat"); help wat am i dong
-		//printMultiLine("You've awakened in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been pushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the light bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.");
-		//checkInput(input.nextLine());
-		//String[] bla = {"bla","bla"};
-		//String[] blabla = {"bla","bla"};
-		//System.out.print(Arrays.deepEquals(bla, blabla)); // dis works boi
+		//runGame();
 	}
 }
