@@ -13,18 +13,13 @@ public class Verb {
 	}
 	
 	public static void findAndExecuteAction(Item[] items, Character[] characters, String[] verbStrings){
-		System.out.println("DEBUG: finding and executing actions");
-		System.out.println(items[0]);
-		System.out.println(verbStrings[0]);
 		boolean flag = true;
 				
 		for(Verb toExecute : allVerbs){
-			System.out.println("DEBUG: Verb toExecute name: " + toExecute.name);
-			if(Arrays.deepEquals(toExecute.format, verbStrings)){ //dont worry i can fix this
-				System.out.println("yeet");
+			if(Arrays.deepEquals(toExecute.format, verbStrings)){
 				toExecute.action(items, characters);
 			}else if(flag){
-				System.out.println("I can't do that.");
+				//System.out.println("I can't do that.");
 			}
 		}
 	}
