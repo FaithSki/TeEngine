@@ -13,14 +13,19 @@ public class Verb {
 	}
 	
 	public static void findAndExecuteAction(Item[] items, Character[] characters, String[] verbStrings){
-		boolean flag = true;
-				
+		boolean flag = false;
+		System.out.println(verbStrings[0]);
+		System.out.println(verbStrings[1]);
+		System.out.println(items[0]);
+		System.out.println(items[1].itemName[0]);
 		for(Verb toExecute : allVerbs){
 			if(Arrays.deepEquals(toExecute.format, verbStrings)){
 				toExecute.action(items, characters);
-			}else if(flag){
-				//System.out.println("I can't do that.");
+				flag = true;
 			}
+		}
+		if(!flag){
+			System.out.println("I can't do that");
 		}
 	}
 	
@@ -116,7 +121,20 @@ public class Verb {
 		public String name = "west", format[] = {"west"};
 		
 		public void action(Item[] items, Character[] characters) {
-			System.out.println("You can't see anything like that.");
+			
+			if(PlayerInfo.playerRoom.west != null ){
+				if(!PlayerInfo.playerRoom.west.locked){
+						if(PlayerInfo.playerRoom.west.room1 == PlayerInfo.playerRoom){
+							System.out.println(PlayerInfo.playerRoom.west.exitRoom1);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.west.room2;
+						}else{
+							System.out.println(PlayerInfo.playerRoom.west.exitRoom2);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.west.room1;
+						}
+				}else
+					System.out.println(PlayerInfo.playerRoom.west.lockedText);
+			}else
+				System.out.println("There is no exit to the west.");
 		}
 	}
 	
@@ -127,7 +145,7 @@ public class Verb {
 
 		public String name = "help", format[] = {null,"help"};
 		
-		public void action(Item[] items) {
+		public void action(Item[] items, Character[] characters) {
 			System.out.println("This is a text-based adventure, inspired by Infocom interactive fiction games.");
 			System.out.println("You may perform actions by inputting verbs, or verbs followed by nouns.");
 			System.out.println("For example; \"look\", \"examine box\", \"take key\", etc.");
@@ -137,5 +155,20 @@ public class Verb {
 			System.out.println("Have fun!");
 			System.out.println();
 			}
+	}
+	
+	public static class openBox extends Verb {
+		openBox(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
+		public String name = "openBox", format[] = {"open",null};
+		
+		public void action(Item[] items, Character[] characters) {
+			if(items[1] == Item.getItem("box")){
+				System.out.println("You opened the box, revealing a key card.");
+				Item.getItem("key","card").visible = true;
+			}
+		}
 	}
 }

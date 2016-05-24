@@ -24,6 +24,8 @@ public class Base {
 		new Verb.look("look",new String[]{"look"});//you can create an array inline for methods, thanks stackoverflow
 		new Verb.take("take", new String[]{"take",null});
 		new Verb.examine("examine",new String[]{"examine",null});
+		new Verb.west("west",new String[]{"west"});
+		new Verb.openBox("openBox",new String[]{"open","box"});
 		
 		/*Item constructor takes, in this order: 
 		 * Name (String)
@@ -54,7 +56,7 @@ public class Base {
 		Item present = new Item(presentName,"A plain cardboard box, featureless aside from the little plastic blue bow taped on to the top. A note is taped to the side.",true,false,false,true,presentActions,"You don't forsee much of a need for a cardboard box. But what's inside?",null,null);
 		Verb[] noteActions = {null};
 		String[] noteName = {"Note"};
-		Item note = new Item(noteName,null,false,false,false,true,keyCardActions,"It's stuck to the box.. though, you can't see anything adhering it to the cardboard.",null,null);
+		Item note = new Item(noteName,null,false,false,false,true,keyCardActions,"It's stuck to the box.. though, you can't see anything adhering it to the cardboard.",null,null);// we will put the stuff for picture here
 		// The note should open a graphic. Just put a weird, vague, cryptic message on it, like it's from a mysterious benefactor/creepy-weirdo. The box will contain the keycard.
 		Verb[] generalActions = {null};
 		Item blank = new Item(null,"",false,false,false,false,generalActions,"",null,null);
@@ -70,8 +72,7 @@ public class Base {
 		 * Locked (Boolean)
 		 * Locked Text (String)
 		 */
-		String[] apartmentDoor1Room1 = {"west","w"};String[] apartmentDoor1Room2 = {"east","e"};
-		Exit apartmentDoor1 = new Exit(apartmentDoor1Room1,apartmentDoor1Room2,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond..","Turning the stainless-steel handle, you re-enter the apartment you awoke in..",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
+		
 		// apartmentDoor1 leads between startApartment and apartmentHallway
 		
 		/*Room constructor takes, in this order: 
@@ -79,18 +80,24 @@ public class Base {
 		 * Description (String)
 		 * Short Description (String)
 		 * North Exit (Exit)
-		 * South Exit (Exit)
+		 * South Exit (Exit) 
 		 * East Exit (Exit)
 		 * West Exit (Exit
 		 * Items (ArrayList)
+		 * i am not updating these^^^^^
 		 */
-		items.add(bed);
-		items.add(window);
-		items.add(television); // yo what is this u gotta separate your lines "items.add(bed);items.add(window);items.add(television);"
-		Room startApartment = new Room("APARTMENT","You've awoken in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been\npushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the\nlight bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless,\naside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed.\nThe ceiling light is off. You can hear rain outside.",null,null,null,apartmentDoor1,items);
+		
+		Room startApartment = new Room("APARTMENT","You've awoken in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been\npushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the\nlight bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless,\naside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed.\nThe ceiling light is off. You can hear rain outside.",null,null,null,null,items);
 		resetRoomArrayLists();
 		items.add(window);
-		Room commonRoom = new Room("COMMON ROOM","This room is long; more of a hallway with furniture, you figure. Doors line the eastern wall, at least a dozen of them, all identical to the one leading into\n \"your\" apartment, aside from their lack of any sort of handle. Aside from the doors, this room features clusters of old mis-matched plastic and metal chairs, each one\ncushioned and surrounding a stainless steel table. A small kitchenette sits on the western wall, along with a rather nondescript door. To the north lies a curtained\nwindow. You can hear rain outside.","A long common room, dotted with decaying furniture, apartment doors, and a kitchenette. The exit lies to the west. To the north, a window. The apartment you awoke\nin is to the east. You can hear rain outside.",null,null,apartmentDoor1,null,items);
+		Room commonRoom = new Room("COMMON ROOM","This room is long; more of a hallway with furniture, you figure. Doors line the eastern wall, at least a dozen of them, all identical to the one leading into\n \"your\" apartment, aside from their lack of any sort of handle. Aside from the doors, this room features clusters of old mis-matched plastic and metal chairs, each one\ncushioned and surrounding a stainless steel table. A small kitchenette sits on the western wall, along with a rather nondescript door. To the north lies a curtained\nwindow. You can hear rain outside.","A long common room, dotted with decaying furniture, apartment doors, and a kitchenette. The exit lies to the west. To the north, a window. The apartment you awoke\nin is to the east. You can hear rain outside.",null,null,null,null,items);
+		
+		
+		Exit apartmentDoor1 = new Exit(startApartment, commonRoom,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond..","Turning the stainless-steel handle, you re-enter the apartment you awoke in..",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
+		
+		startApartment.west = apartmentDoor1;
+		commonRoom.east = apartmentDoor1;
+		
 		
 		// End constructing all game objects
 
@@ -123,7 +130,6 @@ public class Base {
 		String[] separatedInput = input.split(" ");
 		Item[] items = new Item[separatedInput.length];
 		String[] verbStrings = new String[separatedInput.length];
-		Exit[] exits = new Exit[separatedInput.length];
 		Character[] characters = new Character[separatedInput.length];
 	
 		for(int i = 0;i < separatedInput.length;i++){
