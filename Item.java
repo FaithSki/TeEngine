@@ -45,6 +45,10 @@ public class Item {
 				return true;
 		return false;
 	}
+	
+	public void setLocation(Room inputRoom){
+		location = inputRoom;
+	}
 
 	public static boolean isItem(String word){
 		for(Item currentItem : allItems){
