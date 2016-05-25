@@ -14,11 +14,6 @@ public class Verb {
 	
 	public static void findAndExecuteAction(Item[] items, Character[] characters, String[] verbStrings){
 		boolean flag = false;
-		System.out.println(verbStrings[0]);
-		System.out.println(verbStrings[1]);
-		System.out.println(verbStrings[2]);
-		System.out.println(items[1].itemName());
-	//	System.out.println(items[2].itemName());
 		for(Verb toExecute : allVerbs){
 			if(Arrays.deepEquals(toExecute.format, verbStrings)){
 				System.out.println("hey");
@@ -27,7 +22,7 @@ public class Verb {
 			}
 		}
 		if(!flag){
-			System.out.println("I can't do that");
+			System.out.println("That didn't quite make sense.");
 		}
 	}
 	
@@ -87,7 +82,12 @@ public class Verb {
 		public String name = "examine", format[] = {"examine",null};
 		
 		public void action(Item[] items, Character[] characters) {
+			System.out.println("1");
+			if (items[1].location == PlayerInfo.playerRoom){
+				System.out.println("help");
+			}
 			if (((items[1].location == PlayerInfo.playerRoom) || (PlayerInfo.isItemOwned(items[1]))) && items[1].visible){
+				System.out.println("2");
 				if(!items[1].visible)
 					items[1].visible = true;
 				System.out.println(items[1].itemDescription);
@@ -162,7 +162,7 @@ public class Verb {
 			super(inputName, inputFormat);
 		}
 
-		public String name = "help", format[] = {null,"help"};
+		public String name = "help", format[] = {null, "help"};
 		
 		public void action(Item[] items, Character[] characters) {
 			System.out.println("This is a text-based adventure, inspired by Infocom interactive fiction games.");
@@ -185,7 +185,7 @@ public class Verb {
 		
 		public void action(Item[] items, Character[] characters) {
 			if(items[1] == Item.getItem("box")){
-				System.out.println("You opened the box, revealing a key card.");
+				System.out.println("You open the box. Inside, a small key card rests at the bottom.");
 				Item.getItem("key","card").visible = true;
 				Item.getItem("key","card").pickupAble = true;
 			}
