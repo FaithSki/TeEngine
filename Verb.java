@@ -16,10 +16,12 @@ public class Verb {
 		boolean flag = false;
 		System.out.println(verbStrings[0]);
 		System.out.println(verbStrings[1]);
-		System.out.println(items[0]);
-		System.out.println(items[1].itemName[0]);
+		System.out.println(verbStrings[2]);
+		System.out.println(items[1].itemName());
+	//	System.out.println(items[2].itemName());
 		for(Verb toExecute : allVerbs){
 			if(Arrays.deepEquals(toExecute.format, verbStrings)){
+				System.out.println("hey");
 				toExecute.action(items, characters);
 				flag = true;
 			}
@@ -37,6 +39,23 @@ public class Verb {
 		}
 
 		public String name = "take", format[] = {"take",null}; // a central method would replace any (Item)s and do something with it to make it work, something would look for items in those (Item) slots
+		
+		public void action(Item[] items, Character[] characters) {
+			if(items[1].location == PlayerInfo.playerRoom && items[1].visible && items[1].pickupAble){
+				PlayerInfo.inventory.add(items[1]);
+				PlayerInfo.playerRoom.items.remove(items[1]);
+				System.out.println("You take the " + items[1].itemName + ".");
+			}else
+				System.out.println(items[1].cantPickUpMessage);
+		}
+	}
+	
+	public static class takeTwo extends Verb {
+		takeTwo(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
+		public String name = "takeTwo", format[] = {"take",null,null}; // a central method would replace any (Item)s and do something with it to make it work, something would look for items in those (Item) slots
 		
 		public void action(Item[] items, Character[] characters) {
 			if(items[1].location == PlayerInfo.playerRoom && items[1].visible && items[1].pickupAble){
@@ -168,6 +187,7 @@ public class Verb {
 			if(items[1] == Item.getItem("box")){
 				System.out.println("You opened the box, revealing a key card.");
 				Item.getItem("key","card").visible = true;
+				Item.getItem("key","card").pickupAble = true;
 			}
 		}
 	}

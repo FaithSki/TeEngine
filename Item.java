@@ -59,9 +59,14 @@ public class Item {
 	}
 
 	public static boolean isItem(String firstWord, String secondWord){
-		for(Item currentItem : allItems)
-			if(firstWord.equalsIgnoreCase(currentItem.itemName[0]) && secondWord.equalsIgnoreCase(currentItem.itemName[1]))
-				return true;
+		for(Item currentItem : allItems){
+			try{
+				if(firstWord.equalsIgnoreCase(currentItem.itemName[0]) && secondWord.equalsIgnoreCase(currentItem.itemName[1]))
+					return true;
+			}catch(Exception a){
+				return false;
+			}
+		}
 		return false;
 	}
 

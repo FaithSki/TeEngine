@@ -23,9 +23,10 @@ public class Base {
 		
 		new Verb.look("look",new String[]{"look"});//you can create an array inline for methods, thanks stackoverflow
 		new Verb.take("take", new String[]{"take",null});
+		new Verb.takeTwo("takeTwo", new String[]{"take",null,null});
 		new Verb.examine("examine",new String[]{"examine",null});
 		new Verb.west("west",new String[]{"west"});
-		new Verb.openBox("openBox",new String[]{"open","box"});
+		new Verb.openBox("openBox",new String[]{"open",null});
 		
 		/*Item constructor takes, in this order: 
 		 * Name (String)
@@ -116,12 +117,12 @@ public class Base {
 			}
 			System.out.print(">_ ");
 			PlayerInfo.playerRoom.visited = true;
-			try{
+		//	try{
 				checkInput(sc.nextLine());
-			}
-			catch (Exception a){
-				System.out.println("That doesn't quite make sense.");
-			}
+		//	}
+		//	catch (Exception a){
+		//		System.out.println("That doesn't quite make sense.");
+		//	}
 			System.out.println();
 		}
 	}	
@@ -133,17 +134,20 @@ public class Base {
 		Character[] characters = new Character[separatedInput.length];
 	
 		for(int i = 0;i < separatedInput.length;i++){
-			//System.out.println("DEBUG: new for-loop iteration. i = " + i);
-			if(Item.isItem(separatedInput[i])){ // throws out-of-bounds w/ a 1 or a 2 when the for-loop uses "i <= seperatedInput.length"
-				items[i] = Item.getItem(separatedInput[i]);
-				verbStrings[i] = null;
-				//System.out.println("DEBUG: one-word Item, i = " + i);
-			}else if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
+			System.out.println("DEBUG: new for-loop iteration. i = " + i);
+			System.out.println(Item.isItem(separatedInput[i],separatedInput[i+1]));
+			if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
 				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
 				verbStrings[i] = null;
 				i++;
-				items[i] = null; // when it finds a 2-word item it makes the next items element null and it then moves past it
-				//System.out.println("DEBUG: two-word Item, i = " + i);
+				items[i] = null;
+				verbStrings[i] = null;
+				// when it finds a 2-word item it makes the next items element null and it then moves past it
+				System.out.println("DEBUG: two-word Item, i = " + i);
+			}else if(Item.isItem(separatedInput[i])){ // throws out-of-bounds w/ a 1 or a 2 when the for-loop uses "i <= seperatedInput.length"
+				items[i] = Item.getItem(separatedInput[i]);
+				verbStrings[i] = null;
+				System.out.println("DEBUG: one-word Item, i = " + i);
 			}else if(Character.isCharacter(separatedInput[i])){
 				characters[i] = Character.getCharacter(separatedInput[i]);
 				verbStrings[i] = null;
@@ -151,7 +155,7 @@ public class Base {
 			}
 			else{
 				verbStrings[i] = separatedInput[i];
-				//System.out.println("DEBUG: verb, i = " + i);
+				System.out.println("DEBUG: verb, i = " + i);
 			}
 		}	
 		Verb.findAndExecuteAction(items, characters, verbStrings);
