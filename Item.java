@@ -48,6 +48,15 @@ public class Item {
 		return false;
 	}
 	
+	public String returnName(){
+		try{
+			return (itemName[0] + " " + itemName[1]);
+		}
+		catch(Exception a){
+			return itemName[0];
+		}
+	}
+	
 	public void setLocation(Room inputRoom){
 		location = inputRoom;
 	}
