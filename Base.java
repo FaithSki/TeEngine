@@ -28,6 +28,10 @@ public class Base {
 		new Verb.examine("examine",new String[]{"examine",null});
 		new Verb.west("west",new String[]{"west"});
 		new Verb.open("open",new String[]{"open",null});
+		new Verb.close("close",new String[]{"close",null});
+		new Verb.help("help",new String[]{"help"});
+		new Verb.inventory("inventory",new String[]{"inventory"});
+		new Verb.unlock("unlock",new String[]{"unlock",null,"with",null});
 		
 		/*Item constructor takes, in this order: 
 		 * Name (String)
@@ -60,6 +64,9 @@ public class Base {
 		String[] noteName = {"Note"};
 		Item note = new Item(noteName,null,false,false,false,true,noteActions,"It's stuck to the box.. though, you can't see anything adhering it to the cardboard.",null,null);// we will put the stuff for picture here
 		// The note should open a graphic. Just put a weird, vague, cryptic message on it, like it's from a mysterious benefactor/creepy-weirdo. The box will contain the keycard.
+		Verb[] aptDoorObjectActions = {null};
+		String[] aptDoorObjectName = {"Door"};
+		Item aptDoorObject = new Item(aptDoorObjectName,"A simple door, made from some sort of false-wood product. The handle is made of stainless steel, and is held to the doorframe by an electronic key card lock.",false,true,false,true,aptDoorObjectActions,"It's firmly installed into the doorway.",null,null);
 		Verb[] generalActions = {null};
 		Item blank = new Item(null,"",false,false,false,false,generalActions,"",null,null);
 		items.add(blank);
@@ -89,7 +96,7 @@ public class Base {
 		 * i am not updating these^^^^^
 		 */
 		
-		startApartment = new Room("APARTMENT","You've awoken in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been\npushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the\nlight bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless,\naside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed.\nThe ceiling light is off. You can hear rain outside.",null,null,null,null,items);
+		startApartment = new Room("APARTMENT","You've awoken in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been\npushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the\nlight bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. A small cardboard box rests in the middle of the carpet,\na blue ribbon stuck upon the top. The rest of the apartment is entirely featureless, aside from the occasional stain in the carpet and tear in the plain wallpaper.\nYou can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed.\nThe ceiling light is off. A box is on the floor. You can hear rain outside.",null,null,null,null,items);
 		bed.setLocation(startApartment);
 		television.setLocation(startApartment);
 		window.setLocation(startApartment);
@@ -98,10 +105,8 @@ public class Base {
 		note.setLocation(startApartment);
 		resetRoomArrayLists();
 		Room commonRoom = new Room("COMMON ROOM","This room is long; more of a hallway with furniture, you figure. Doors line the eastern wall, at least a dozen of them, all identical to the one leading into\n \"your\" apartment, aside from their lack of any sort of handle. Aside from the doors, this room features clusters of old mis-matched plastic and metal chairs, each one\ncushioned and surrounding a stainless steel table. A small kitchenette sits on the western wall, along with a rather nondescript door. To the north lies a curtained\nwindow. You can hear rain outside.","A long common room, dotted with decaying furniture, apartment doors, and a kitchenette. The exit lies to the west. To the north, a window. The apartment you awoke\nin is to the east. You can hear rain outside.",null,null,null,null,items);
-		Item window2 = window;
-		window2.setLocation(commonRoom);
 		
-		Exit apartmentDoor1 = new Exit(startApartment, commonRoom,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond..","Turning the stainless-steel handle, you re-enter the apartment you awoke in..",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
+		Exit apartmentDoor1 = new Exit("apartmentInsideDoor",startApartment, commonRoom,"Turning the stainless-steel handle, you manage to slowly swing the door open and emerge into the hall beyond..","Turning the stainless-steel handle, you re-enter the apartment you awoke in..",true,"The door won't budge; an electronic lock holds it closed, awaiting an authorized keycard. Why is this on the inside?");
 		
 		startApartment.west = apartmentDoor1;
 		commonRoom.east = apartmentDoor1;
@@ -146,7 +151,6 @@ public class Base {
 			System.out.println("i: " + i);
 			System.out.println("sI: " + separatedInput.length);*/
 			if(i < separatedInput.length - 1 && Item.isItem(separatedInput[i],separatedInput[i + 1])){
-				System.out.println("2 word");
 				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
 				verbStrings[i] = null;
 				i++;
@@ -161,7 +165,6 @@ public class Base {
 				verbStrings[i] = null;
 			}
 			else{
-				System.out.println("adding to verbstrings: " + separatedInput[i]);
 				verbStrings[i] = separatedInput[i];
 			}
 		}	
@@ -196,7 +199,6 @@ public class Base {
 			System.out.println(inputStatement);
 		}
 	}*/
-
 	public static void main (String str[]) {
 		runGame();
 	}
