@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Base {
@@ -11,7 +12,7 @@ public class Base {
 	public Item television;
 	public Item blank;
 
-	public Room startApartment;
+	public static Room startApartment;
 
 	public static void resetRoomArrayLists(){
 		exits = new ArrayList<Exit>();
@@ -26,7 +27,7 @@ public class Base {
 		new Verb.takeTwo("takeTwo", new String[]{"take",null,null});
 		new Verb.examine("examine",new String[]{"examine",null});
 		new Verb.west("west",new String[]{"west"});
-		new Verb.openBox("openBox",new String[]{"open",null});
+		new Verb.open("open",new String[]{"open",null});
 		
 		/*Item constructor takes, in this order: 
 		 * Name (String)
@@ -88,7 +89,7 @@ public class Base {
 		 * i am not updating these^^^^^
 		 */
 		
-		Room startApartment = new Room("APARTMENT","You've awoken in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been\npushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the\nlight bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless,\naside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed.\nThe ceiling light is off. You can hear rain outside.",null,null,null,null,items);
+		startApartment = new Room("APARTMENT","You've awoken in the dim light of this small, one-room apartment. The small bed you awoke upon sits in the back corner, facing an old television that's been\npushed up against the wall. Drawing your gaze from the TV is a dirty old window, softly glowing with the slight blue light that illuminates the room. Apparently, the\nlight bulb in the ceiling is failing at its job. A faux-wood door is set into the western wall of the room. The rest of the apartment is entirely featureless,\naside from the occasional stain in the carpet and tear in the plain wallpaper. You can hear rain outside.","The dirty old apartment you awoke in. Its only exit is through a door to the west. A TV sits below a window, in front of the bed.\nThe ceiling light is off. You can hear rain outside.",null,null,null,null,items);
 		bed.setLocation(startApartment);
 		television.setLocation(startApartment);
 		window.setLocation(startApartment);
@@ -123,10 +124,10 @@ public class Base {
 			}
 			System.out.print(">_ ");
 			PlayerInfo.playerRoom.visited = true;
-		//	try{
+		//	try{		
 				checkInput(sc.nextLine());
 		//	}
-		//	catch (Exception a){
+		//	catch (Exception a){ for debugging so I know when theres an exception, uncomment when done
 		//		System.out.println("That doesn't quite make sense.");
 		//	}
 			System.out.println();
@@ -140,7 +141,12 @@ public class Base {
 		Character[] characters = new Character[separatedInput.length];
 	
 		for(int i = 0;i < separatedInput.length;i++){
-			if(separatedInput.length < i && Item.isItem(separatedInput[i],separatedInput[i + 1])){
+			/*System.out.println("making verbStrings: " + Arrays.toString(verbStrings));
+			System.out.println("making items: " + Arrays.toString(items));
+			System.out.println("i: " + i);
+			System.out.println("sI: " + separatedInput.length);*/
+			if(i < separatedInput.length - 1 && Item.isItem(separatedInput[i],separatedInput[i + 1])){
+				System.out.println("2 word");
 				items[i] = Item.getItem(separatedInput[i], separatedInput[i + 1]);
 				verbStrings[i] = null;
 				i++;
@@ -155,6 +161,7 @@ public class Base {
 				verbStrings[i] = null;
 			}
 			else{
+				System.out.println("adding to verbstrings: " + separatedInput[i]);
 				verbStrings[i] = separatedInput[i];
 			}
 		}	
