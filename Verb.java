@@ -14,9 +14,11 @@ public class Verb {
 	
 	public static void findAndExecuteAction(Item[] items, Character[] characters, String[] verbStrings){
 		boolean flag = false;
+		System.out.println("verbStrings: " + Arrays.toString(verbStrings));
 		for(Verb toExecute : allVerbs){
-			if(Arrays.deepEquals(toExecute.format, verbStrings)){
-				System.out.println("hey");
+			System.out.println("format: " + Arrays.toString(toExecute.format));
+			if(!flag && Arrays.deepEquals(toExecute.format, verbStrings)){
+				System.out.println("Hey");
 				toExecute.action(items, characters);
 				flag = true;
 			}
@@ -39,7 +41,7 @@ public class Verb {
 			if(items[1].location == PlayerInfo.playerRoom && items[1].visible && items[1].pickupAble){
 				PlayerInfo.inventory.add(items[1]);
 				PlayerInfo.playerRoom.items.remove(items[1]);
-				System.out.println("You take the " + items[1].itemName + ".");
+				System.out.println("You take the " + items[1].itemName() + ".");
 			}else
 				System.out.println(items[1].cantPickUpMessage);
 		}
@@ -56,9 +58,38 @@ public class Verb {
 			if(items[1].location == PlayerInfo.playerRoom && items[1].visible && items[1].pickupAble){
 				PlayerInfo.inventory.add(items[1]);
 				PlayerInfo.playerRoom.items.remove(items[1]);
-				System.out.println("You take the " + items[1].itemName + ".");
+				System.out.println("You take the " + items[1].itemName() + ".");
 			}else
 				System.out.println(items[1].cantPickUpMessage);
+		}
+	}
+	
+	public static class drop extends Verb {
+		drop(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
+		public String name = "take", format[] = {"take",null}; // a central method would replace any (Item)s and do something with it to make it work, something would look for items in those (Item) slots
+		
+		public void action(Item[] items, Character[] characters) {
+			if(items[1].location == PlayerInfo.playerRoom && items[1].visible && items[1].pickupAble){
+				PlayerInfo.inventory.add(items[1]);
+				PlayerInfo.playerRoom.items.remove(items[1]);
+				System.out.println("You take the " + items[1].itemName() + ".");
+			}else
+				System.out.println(items[1].cantPickUpMessage);
+		}
+	}
+	
+	public static class inventory extends Verb {
+		inventory(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
+		public String name = "inventory", format[] = {"inventory"};
+		
+		public void action(Item[] items, Character[] characters){
+			System.out.println(PlayerInfo.playerRoom.roomDesc);
 		}
 	}
 	
@@ -168,6 +199,7 @@ public class Verb {
 			System.out.println("This is a text-based adventure, inspired by Infocom interactive fiction games.");
 			System.out.println("You may perform actions by inputting verbs, or verbs followed by nouns.");
 			System.out.println("For example; \"look\", \"examine box\", \"take key\", etc.");
+			System.out.println("\"inventory\" is the command to access your currently held items.");
 			System.out.println("Additionally, you may navigate between rooms using cardinal directions.");
 			System.out.println("\"North\", or simply \"n\", can be inputted to travel through an exit to the north.");
 			System.out.println();
@@ -175,19 +207,44 @@ public class Verb {
 			System.out.println();
 			}
 	}
-	
-	public static class openBox extends Verb {
-		openBox(String inputName, String[] inputFormat) {
+	//TODO: change to work like close
+	public static class open extends Verb {
+		open(String inputName, String[] inputFormat) {
 			super(inputName, inputFormat);
 		}
 
-		public String name = "openBox", format[] = {"open",null};
+		public String name = "open", format[] = {"open",null};
 		
 		public void action(Item[] items, Character[] characters) {
-			if(items[1] == Item.getItem("box")){
-				System.out.println("You open the box. Inside, a small key card rests at the bottom.");
-				Item.getItem("key","card").visible = true;
-				Item.getItem("key","card").pickupAble = true;
+			if(items[1] == Item.getItem("box") && PlayerInfo.playerRoom == Base.startApartment){
+				if(!Item.getItem("key","card").visible && !Item.getItem("key","card").pickupAble){
+					System.out.println("You open the box. Inside, a small key card rests at the bottom.");
+					Item.getItem("key","card").visible = true;
+					Item.getItem("key","card").pickupAble = true;
+				}else
+					System.out.println("You open the box, but it is empty.");
+			}
+		}
+	}
+	
+	public static class close extends Verb {
+		close(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+
+		public String name = "close", format[] = {"close",null};
+		
+		public void action(Item[] items, Character[] characters) {
+			if(items[1] == Item.getItem("box") && PlayerInfo.playerRoom == Base.startApartment){
+				if(!Item.getItem("box").open){
+					System.out.print("The box is already open.");
+				}else{
+					System.out.println("You close the box.");
+					if(Item.getItem("box").heldItem == Item.getItem("key","card")){
+						Item.getItem("key","card").visible = false;
+						Item.getItem("key","card").pickupAble = false;
+					}	
+				}
 			}
 		}
 	}
