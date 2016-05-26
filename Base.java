@@ -22,16 +22,19 @@ public class Base {
 	public static void runGame(){
 		// Start constructing all game objects
 		
-		new Verb.look("look",new String[]{"look"});//you can create an array inline for methods, thanks stackoverflow
+		new Verb.look("look",new String[]{"look"});
 		new Verb.take("take", new String[]{"take",null});
 		new Verb.takeTwo("takeTwo", new String[]{"take",null,null});
 		new Verb.examine("examine",new String[]{"examine",null});
+		new Verb.north("north",new String[]{"north"});
+		new Verb.south("south",new String[]{"south"});
+		new Verb.east("east",new String[]{"east"});
 		new Verb.west("west",new String[]{"west"});
 		new Verb.open("open",new String[]{"open",null});
 		new Verb.close("close",new String[]{"close",null});
 		new Verb.help("help",new String[]{"help"});
 		new Verb.inventory("inventory",new String[]{"inventory"});
-		new Verb.unlock("unlock",new String[]{"unlock",null,"with",null});
+		new Verb.swipe("swipe",new String[]{"swipe",null,null});
 		
 		/*Item constructor takes, in this order: 
 		 * Name (String)
@@ -111,6 +114,7 @@ public class Base {
 		startApartment.west = apartmentDoor1;
 		commonRoom.east = apartmentDoor1;
 		
+		Character william = new Character("William", commonRoom);
 		
 		// End constructing all game objects
 
@@ -123,6 +127,9 @@ public class Base {
 			System.out.println(PlayerInfo.playerRoom.roomName()); 
 			if (PlayerInfo.playerRoom.visited() == false){
 				System.out.println(PlayerInfo.playerRoom.roomDesc());
+				if(PlayerInfo.playerRoom == commonRoom){
+					System.out.println("");//put something about the npc here, when you enter the common room.
+				}
 			}
 			else{
 				System.out.println(PlayerInfo.playerRoom.roomShortDesc());

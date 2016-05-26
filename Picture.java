@@ -15,7 +15,7 @@ public class Picture extends JFrame{
 		Picture pic = new Picture(title);
 		
 		pic.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		pic.setSize(500,500);
+		pic.setSize(300,300);
 		pic.setVisible(true);
 		pic.add(new JLabel(new ImageIcon(makePic)));
 		

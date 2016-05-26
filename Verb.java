@@ -143,7 +143,20 @@ public class Verb {
 		public String name = "north", format[] = {"north"};
 		
 		public void action(Item[] items, Character[] characters) {
-			System.out.println("You can't see anything like that.");
+			
+			if(PlayerInfo.playerRoom.north != null ){
+				if(!PlayerInfo.playerRoom.north.locked){
+						if(PlayerInfo.playerRoom.north.room1 == PlayerInfo.playerRoom){
+							System.out.println(PlayerInfo.playerRoom.north.exitRoom1);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.north.room2;
+						}else{
+							System.out.println(PlayerInfo.playerRoom.north.exitRoom2);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.north.room1;
+						}
+				}else
+					System.out.println(PlayerInfo.playerRoom.north.lockedText);
+			}else
+				System.out.println("There is no exit to the north.");
 		}
 	}
 	
@@ -155,7 +168,20 @@ public class Verb {
 		public String name = "south", format[] = {"south"};
 		
 		public void action(Item[] items, Character[] characters) {
-			System.out.println("You can't see anything like that.");
+			
+			if(PlayerInfo.playerRoom.south != null ){
+				if(!PlayerInfo.playerRoom.south.locked){
+						if(PlayerInfo.playerRoom.south.room1 == PlayerInfo.playerRoom){
+							System.out.println(PlayerInfo.playerRoom.south.exitRoom1);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.south.room2;
+						}else{
+							System.out.println(PlayerInfo.playerRoom.south.exitRoom2);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.south.room1;
+						}
+				}else
+					System.out.println(PlayerInfo.playerRoom.south.lockedText);
+			}else
+				System.out.println("There is no exit to the south.");
 		}
 	}
 	
@@ -167,7 +193,20 @@ public class Verb {
 		public String name = "east", format[] = {"east"};
 		
 		public void action(Item[] items, Character[] characters) {
-			System.out.println("You can't see anything like that.");
+			
+			if(PlayerInfo.playerRoom.east != null ){
+				if(!PlayerInfo.playerRoom.east.locked){
+						if(PlayerInfo.playerRoom.east.room1 == PlayerInfo.playerRoom){
+							System.out.println(PlayerInfo.playerRoom.east.exitRoom1);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.east.room2;
+						}else{
+							System.out.println(PlayerInfo.playerRoom.east.exitRoom2);
+							PlayerInfo.playerRoom = PlayerInfo.playerRoom.east.room1;
+						}
+				}else
+					System.out.println(PlayerInfo.playerRoom.east.lockedText);
+			}else
+				System.out.println("There is no exit to the east.");
 		}
 	}
 	
@@ -224,13 +263,18 @@ public class Verb {
 		
 		public void action(Item[] items, Character[] characters) {
 			if(items[1] == Item.getItem("box") && PlayerInfo.playerRoom == Base.startApartment){
-				if(!(PlayerInfo.isItemOwned(Item.getItem("key","card")))){
-					System.out.println("You open the box. Inside, a small key card rests at the bottom.");
-					Item.getItem("key","card").visible = true;
-					Item.getItem("key","card").pickupAble = true;
-				}
-				else{
-					System.out.println("You open the box, but it is empty.");
+				if(Item.getItem("box").open){
+					System.out.println("The box is already open.");
+				}else{
+					Item.getItem("box").open = true;
+					if(!(PlayerInfo.isItemOwned(Item.getItem("key","card")))){
+						System.out.println("You open the box. Inside, a small key card rests at the bottom.");
+					
+						Item.getItem("key","card").visible = true;
+						Item.getItem("key","card").pickupAble = true;
+					}else{
+						System.out.println("You open the box, but it is empty.");
+					}
 				}
 			}
 		}
@@ -246,7 +290,7 @@ public class Verb {
 		public void action(Item[] items, Character[] characters) {
 			if(items[1] == Item.getItem("box") && PlayerInfo.playerRoom == Base.startApartment){
 				if(!Item.getItem("box").open){
-					System.out.print("The box is already open.");
+					System.out.print("The box is already closed.");
 				}else{
 					System.out.println("You close the box.");
 					if(Item.getItem("box").heldItem == Item.getItem("key","card")){
@@ -257,7 +301,7 @@ public class Verb {
 			}
 		}
 	}
-	
+	/*
 	public static class unlock extends Verb {
 		unlock(String inputName, String[] inputFormat) {
 			super(inputName, inputFormat);
@@ -270,6 +314,32 @@ public class Verb {
 				System.out.println("You slip the key card into the slot of the electronic lock. A gentle electronic hum sounds for a moment, before being interrupted by\na click as the door is unlocked.");
 				(Exit.getExit("apartmentInsideDoor")).changeLocked(false);
 			}
+		}
+	}
+	*/
+	public static class swipe extends Verb {
+		swipe(String inputName, String[] inputFormat) {
+			super(inputName, inputFormat);
+		}
+		
+		public String name = "swipe", format[] = {"swipe",null,null};
+		
+		public void action(Item[] items, Character[] characters) {
+			if(PlayerInfo.playerRoom == Base.startApartment){
+				if (items[1] == Item.getItem("key","card")){
+					if(PlayerInfo.isItemOwned(Item.getItem("key","card"))){
+						if(Exit.getExit("apartmentInsideDoor").locked()){
+							System.out.println("You slip the key card into the slot of the electronic lock. A gentle electronic hum sounds for a moment, before being interrupted by\na click as the door is unlocked. An image is displayed on a small screen beside the lock.");
+							Picture.makeNewWindow("src/Pics/accessgranted.jpg", "Electronic Lock");
+							Exit.getExit("apartmentInsideDoor").changeLocked(false);
+						}else
+							System.out.println("You slip the key card into the slot of the electronic lock, but nothing happens.");
+					}else
+						System.out.println("You don't have such an item.");
+				}else
+					System.out.println("That doesn't work.");
+			}else
+				System.out.println("You can't find a place to swipe that.");
 		}
 	}
 }
