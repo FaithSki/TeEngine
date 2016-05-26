@@ -12,6 +12,7 @@ public class Exit {
 	String exitRoom2; // The text for when you exit room 2 and enter room 1
 	boolean locked; // Can the Player travel through the Exit?
 	String lockedText; // What's printed when the Player tries to travel through the locked Exit
+	String name;
 	public static ArrayList<Exit> allExits = new ArrayList<Exit>();
 	/*Exit constructor takes, in this order:
 	 * Room 1 (Room)
@@ -23,7 +24,8 @@ public class Exit {
 	 * Locked (Boolean)
 	 * Locked Text (String)
 	 */
-	Exit(Room inputRoom1, Room inputRoom2, String inputExitRoom1, String inputExitRoom2, boolean inputLocked, String inputLockedText){
+	Exit(String inputName, Room inputRoom1, Room inputRoom2, String inputExitRoom1, String inputExitRoom2, boolean inputLocked, String inputLockedText){
+		name = inputName;
 		room1 = inputRoom1;
  		room2 = inputRoom2;
  		exitRoom1 = inputExitRoom1;
@@ -32,6 +34,13 @@ public class Exit {
  		lockedText = inputLockedText;
  		allExits.add(this);
  	}
+	
+	public static Exit getExit(String word){
+		for(Exit currentExit : allExits)
+			if(word.equalsIgnoreCase(currentExit.name))
+				return currentExit;
+		return null;
+	}
 	
 	/*public Room room1(){
 		return room1;
