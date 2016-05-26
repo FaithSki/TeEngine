@@ -14,6 +14,8 @@ public class Item {
 	public String cantUseMessage; // "use" is still super broad, but this should be fine for our demo & stuff
 	public String pictureTitle;
 	public String pictureLocation;//the location "src/Pics/whatever.jpg"
+	public Item heldItem = null;
+	public boolean open; // try using these with the box
 	public static ArrayList<Item> allItems = new ArrayList<Item>();
 	/*Item constructor takes, in this order: 
 	 * Name (String)
